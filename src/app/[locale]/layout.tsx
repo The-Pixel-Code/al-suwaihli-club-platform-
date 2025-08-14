@@ -1,19 +1,21 @@
+// Updated src/app/[locale]/layout.tsx
 import { Almarai } from "next/font/google";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 import { Toaster } from "@/components/ui/sonner";
+import { AppProviders } from "@/components/providers";
 import "./globals.css";
 
-// Importing a Google font
+// Importing Google font
 const almarai = Almarai({
   subsets: ["arabic"],
   weight: ["300", "400", "700", "800"],
   variable: "--font-almarai",
 });
 
-// Generate metadata for Apple Arabic, English, and Arabic locales
+// Generate metadata for Arabic and English locales
 export async function generateMetadata({
   params,
 }: {
@@ -35,19 +37,23 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  // Ensure that the incoming `locale` is valid
   const { locale } = await params;
+  
+  // Ensure that the incoming locale is valid
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
+  // TODO: Get session from auth when implementing authentication
+  // const session = await getServerSession(authOptions);
+
   return (
-    <html lang={locale}>
-      <body className={`${almarai.variable} font-almarai`}>
-        <NextIntlClientProvider>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+      <body className={`${almarai.variable} font-almarai antialiased`}>
+        <AppProviders locale={locale} session={null}>
           {children}
           <Toaster />
-        </NextIntlClientProvider>
+        </AppProviders>
       </body>
     </html>
   );
