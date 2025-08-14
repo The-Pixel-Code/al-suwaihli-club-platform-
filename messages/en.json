@@ -1,0 +1,17 @@
+{   "Metadata" : {
+        "title": "Suwaihli Club - Misrata",
+        "description": "The official site of Suwaihli Sports, Cultural, and Social Club in Misrata."
+    },
+    "welcome": "Welcome to our application!",
+    "login": "Please log in to continue.",
+    "logout": "You have successfully logged out.",
+    "error": {
+        "not_found": "The requested resource was not found.",
+        "server_error": "An unexpected error occurred. Please try again later."
+    },
+    "success": {
+        "data_saved": "Your data has been saved successfully.",
+        "profile_updated": "Your profile has been updated."
+    },
+    "loading": "Loading, please wait..."
+}
