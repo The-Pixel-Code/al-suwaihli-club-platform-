@@ -1,0 +1,98 @@
+├── messages/
+│   ├── ar.json (0.8 KB)
+│   └── en.json (0.7 KB)
+├── public/
+│   ├── assets/
+│   ├── Al-Swihli_Misratah.png (55.1 KB)
+│   ├── file.svg (0.4 KB)
+│   ├── globe.svg (1.0 KB)
+│   ├── next.svg (1.3 KB)
+│   ├── vercel.svg (0.1 KB)
+│   └── window.svg (0.4 KB)
+├── src/
+│   ├── app/
+│   │   ├── [locale]/
+│   │   │   ├── globals.css (4.5 KB)
+│   │   │   ├── layout.tsx (1.6 KB)
+│   │   │   └── page.tsx (0.6 KB)
+│   │   ├── api/
+│   │   │   └── auth/
+│   │   │       └── [...nextauth]/
+│   │   │           └── route.ts (0.2 KB)
+│   │   └── favicon.ico (4.2 KB)
+│   ├── components/
+│   │   ├── admin/
+│   │   │   └── members-table.tsx (2.6 KB)
+│   │   ├── providers/
+│   │   │   ├── app-providers.tsx (0.9 KB)
+│   │   │   ├── index.ts (0.3 KB)
+│   │   │   ├── intl-provider.tsx (0.6 KB)
+│   │   │   ├── query-provider.tsx (0.9 KB)
+│   │   │   ├── session-provider.tsx (0.5 KB)
+│   │   │   └── theme-provider.tsx (0.3 KB)
+│   │   └── ui/
+│   │       ├── accordion.tsx (2.0 KB)
+│   │       ├── alert.tsx (1.6 KB)
+│   │       ├── badge.tsx (1.6 KB)
+│   │       ├── button.tsx (2.1 KB)
+│   │       ├── calendar.tsx (7.5 KB)
+│   │       ├── card.tsx (1.9 KB)
+│   │       ├── chart.tsx (9.6 KB)
+│   │       ├── checkbox.tsx (1.2 KB)
+│   │       ├── collapsible.tsx (0.8 KB)
+│   │       ├── context-menu.tsx (8.0 KB)
+│   │       ├── dialog.tsx (3.9 KB)
+│   │       ├── drawer.tsx (4.2 KB)
+│   │       ├── dropdown-menu.tsx (8.1 KB)
+│   │       ├── form.tsx (3.7 KB)
+│   │       ├── input.tsx (0.9 KB)
+│   │       ├── label.tsx (0.6 KB)
+│   │       ├── navigation-menu.tsx (6.5 KB)
+│   │       ├── popover.tsx (1.6 KB)
+│   │       ├── radio-group.tsx (1.4 KB)
+│   │       ├── scroll-area.tsx (1.6 KB)
+│   │       ├── select.tsx (6.1 KB)
+│   │       ├── separator.tsx (0.7 KB)
+│   │       ├── sheet.tsx (4.0 KB)
+│   │       ├── slider.tsx (2.0 KB)
+│   │       ├── sonner.tsx (0.6 KB)
+│   │       ├── table.tsx (2.4 KB)
+│   │       ├── tabs.tsx (1.9 KB)
+│   │       ├── textarea.tsx (0.7 KB)
+│   │       ├── toggle.tsx (1.5 KB)
+│   │       └── tooltip.tsx (1.8 KB)
+│   ├── hooks/
+│   │   ├── use-auth.ts (0.5 KB)
+│   │   ├── use-language.ts (0.7 KB)
+│   │   ├── use-route-access.ts (1.2 KB)
+│   │   └── use-table.ts (1.6 KB)
+│   ├── i18n/
+│   │   ├── navigation.ts (0.3 KB)
+│   │   ├── request.ts (0.5 KB)
+│   │   └── routing.ts (0.2 KB)
+│   ├── lib/
+│   │   ├── db/
+│   │   │   ├── index.ts (0.5 KB)
+│   │   │   ├── schema.ts (5.5 KB)
+│   │   │   └── seed.ts (4.0 KB)
+│   │   ├── rbac/
+│   │   │   └── rbac-service.ts (4.5 KB)
+│   │   ├── auth.ts (4.0 KB)
+│   │   └── utils.ts (1.2 KB)
+│   ├── types/
+│   │   └── next-auth.d.ts (0.5 KB)
+│   ├── middleware.ts (1.2 KB)
+│   └── routes.ts (4.4 KB)
+├── bun.lock (97.0 KB)
+├── components.json (0.4 KB)
+├── docker-compose.yml (1.1 KB)
+├── drizzle.config.ts (0.5 KB)
+├── eslint.config.mjs (0.4 KB)
+├── init.sql (0.6 KB)
+├── LICENSE (3.9 KB)
+├── next-env.d.ts (0.2 KB)
+├── next.config.ts (0.2 KB)
+├── package.json (2.4 KB)
+├── postcss.config.mjs (0.1 KB)
+├── README.md (9.4 KB)
+└── tsconfig.json (0.6 KB)
