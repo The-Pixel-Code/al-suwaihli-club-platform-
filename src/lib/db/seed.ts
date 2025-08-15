@@ -1,127 +1,65 @@
-// import { db } from "./index";
-// import { 
-//   users, 
-// } from "./schema";
-// import { hashPassword } from "../utils";
+// src/lib/db/seed.ts
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+import * as schema from './schema';
+import bcrypt from "bcryptjs";
+import * as dotenv from 'dotenv';
 
-// async function seed() {
-//   try {
-//     console.log("🌱 Seeding database...");
+// Load environment variables
+dotenv.config({ path: '.env' });
 
-//     // Create admin user
-//     const [adminUser] = await db.insert(users).values({
-//       email: "admin@alsuwaihli.ly",
-//       password: await hashPassword("admin123"),
-//       name: "Super Administrator",
-//       role: "SUPER_ADMIN",
-//       emailVerified: new Date(),
-//       isActive: true,
-//     }).returning();
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is not defined');
+}
 
-//     console.log("✅ Admin user created");
+// Create database connection for seed script
+const client = postgres(process.env.DATABASE_URL);
+const db = drizzle(client, { schema });
+const { users } = schema;
 
-//     // Create content manager
-//     const [contentManager] = await db.insert(users).values({
-//       email: "content@alsuwaihli.ly",
-//       password: await hashPassword("content123"),
-//       name: "Content Manager",
-//       role: "CONTENT_MANAGER",
-//       emailVerified: new Date(),
-//       isActive: true,
-//     }).returning();
+async function seed() {
+  console.log("🌱 Seeding database...");
 
-//     console.log("✅ Content manager created");
-
-//     // Create some sports
-//     const footballSport = await db.insert(sports).values({
-//       name: "Football",
-//       description: "Association Football",
-//       isActive: true,
-//     }).returning();
-
-//     const basketballSport = await db.insert(sports).values({
-//       name: "Basketball",
-//       description: "Basketball Sport",
-//       isActive: true,
-//     }).returning();
-
-//     console.log("✅ Sports created");
-
-//     // Create teams
-//     await db.insert(teams).values([
-//       {
-//         sportId: footballSport[0].id,
-//         name: "Al-Suwaihli FC",
-//         description: "Main football team",
-//         coachId: adminUser.id,
-//         isActive: true,
-//       },
-//       {
-//         sportId: basketballSport[0].id,
-//         name: "Al-Suwaihli Basketball",
-//         description: "Main basketball team",
-//         isActive: true,
-//       }
-//     ]);
-
-//     console.log("✅ Teams created");
-
-//     // Create news categories
-//     const [sportsCategory] = await db.insert(newsCategories).values({
-//       name: "Sports",
-//       slug: "sports",
-//       description: "Sports related news",
-//     }).returning();
-
-//     const [culturalCategory] = await db.insert(newsCategories).values({
-//       name: "Cultural",
-//       slug: "cultural", 
-//       description: "Cultural events and activities",
-//     }).returning();
-
-//     console.log("✅ News categories created");
-
-//     // Create sample news
-//     await db.insert(news).values([
-//       {
-//         title: "Al-Suwaihli FC Wins Local Championship",
-//         content: "Our football team has achieved a remarkable victory in the local championship...",
-//         excerpt: "Al-Suwaihli FC claims championship title",
-//         slug: "alsuwaihli-fc-wins-championship",
-//         authorId: contentManager.id,
-//         categoryId: sportsCategory.id,
-//         isPublished: true,
-//         publishedAt: new Date(),
-//         tags: ["football", "championship", "victory"],
-//       },
-//       {
-//         title: "Annual Cultural Festival Announcement", 
-//         content: "We are pleased to announce our annual cultural festival...",
-//         excerpt: "Join us for the annual cultural celebration",
-//         slug: "annual-cultural-festival-2025",
-//         authorId: contentManager.id,
-//         categoryId: culturalCategory.id,
-//         isPublished: true,
-//         publishedAt: new Date(),
-//         tags: ["culture", "festival", "community"],
-//       }
-//     ]);
-
-//     console.log("✅ Sample news created");
-//     console.log("🎉 Database seeded successfully!");
+  try {
+    // Create admin user
+    const hashedPassword = await bcrypt.hash("admin123", 12);
     
-//   } catch (error) {
-//     console.error("❌ Error seeding database:", error);
-//     throw error;
-//   }
-// }
+    await db.insert(users).values({
+      name: "Super Admin",
+      email: "admin@alsuwaihli.club",
+      password: hashedPassword,
+      role: "SUPER_ADMIN",
+      emailVerified: new Date(),
+      isActive: true,
+    }).onConflictDoNothing();
 
-// // Run the seed function
-// seed()
-//   .catch((error) => {
-//     console.error("Seed script failed:", error);
-//     process.exit(1);
-//   })
-//   .finally(() => {
-//     process.exit(0);
-//   });
+    // Create sample content manager
+    const contentManagerPassword = await bcrypt.hash("content123", 12);
+    
+    await db.insert(users).values({
+      name: "Content Manager",
+      email: "content@alsuwaihli.club", 
+      password: contentManagerPassword,
+      role: "CONTENT_MANAGER",
+      emailVerified: new Date(),
+      isActive: true,
+    }).onConflictDoNothing();
+
+    console.log("✅ Database seeded successfully!");
+    console.log("📧 Admin email: admin@alsuwaihli.club");
+    console.log("🔑 Admin password: admin123");
+    console.log("📧 Content Manager email: content@alsuwaihli.club");
+    console.log("🔑 Content Manager password: content123");
+    
+  } catch (error) {
+    console.error("❌ Error seeding database:", error);
+    throw error;
+  }
+
+  process.exit(0);
+}
+
+seed().catch((error) => {
+  console.error("❌ Seed script failed:", error);
+  process.exit(1);
+});
