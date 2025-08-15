@@ -1,8 +1,14 @@
-// Update src/middleware.ts
-
+// src/middleware.ts
 import createMiddleware from "next-intl/middleware";
 import { withAuth } from "next-auth/middleware";
 import { routing } from "./i18n/routing";
+import { 
+  isPublicRoute, 
+  isAuthRoute, 
+  requiresAuth, 
+  getRequiredRoles,
+  apiAuthPrefix 
+} from "./routes";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -13,23 +19,40 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        // Allow access to public routes
-        if (req.nextUrl.pathname.startsWith('/api/auth')) return true;
-        if (req.nextUrl.pathname === '/' || req.nextUrl.pathname.startsWith('/en') || req.nextUrl.pathname.startsWith('/ar')) {
-          // Check if it's a public route
-          const isPublicRoute = ['/'].some(route => 
-            req.nextUrl.pathname.endsWith(route)
-          );
-          if (isPublicRoute) return true;
+        const { pathname } = req.nextUrl;
+
+        // Always allow API auth routes
+        if (pathname.startsWith(apiAuthPrefix)) {
+          return true;
         }
 
-        // Protect admin routes
-        if (req.nextUrl.pathname.includes('/admin')) {
-          return token?.role === 'ADMIN' || token?.role === 'SUPER_ADMIN';
+        // Remove locale prefix for route checking
+        const cleanPath = pathname.replace(/^\/(en|ar)/, '') || '/';
+
+        // Allow public routes (no authentication needed)
+        if (isPublicRoute(cleanPath)) {
+          return true;
+        }
+
+        // Auth routes - redirect if already authenticated
+        if (isAuthRoute(cleanPath)) {
+          // If user is authenticated, they should be redirected away from auth pages
+          return !token;
+        }
+
+        // For protected routes, check if user is authenticated
+        if (!token) {
+          return false;
+        }
+
+        // Check role-based access for admin routes
+        const requiredRoles = getRequiredRoles(cleanPath);
+        if (requiredRoles.length > 0) {
+          return requiredRoles.includes(token.role as string);
         }
 
         // For other protected routes, just check if user is authenticated
-        return !!token;
+        return requiresAuth(cleanPath) ? !!token : true;
       },
     },
   }
@@ -37,7 +60,9 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
-    "/admin/:path*"
+    // Skip all internal paths (_next)
+    '/((?!_next/static|_next/image|favicon.ico).*)',
+    // Always run for API routes
+    '/api/(.*)',
   ],
 };
