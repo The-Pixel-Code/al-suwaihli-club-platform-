@@ -1,0 +1,270 @@
+// Sweihli Club DBML for dbdiagram.io
+// Import this file on https://dbdiagram.io
+
+Project sweihli_club {
+  database_type: "PostgreSQL"
+  note: "PostgREST-ready schema (RLS not represented in DBML)"
+}
+
+Enum media_type {
+  image
+  video
+}
+
+Enum publish_status {
+  draft
+  scheduled
+  published
+  archived
+}
+
+Enum competition_type {
+  league
+  cup
+  tournament
+}
+
+Enum match_status {
+  scheduled
+  live
+  completed
+  cancelled
+}
+
+Enum star_award_for {
+  tournament
+  league
+  season
+  match
+  other
+}
+
+Table app_user {
+  id uuid [pk]
+  email text [unique, note: "citext in DB"]
+  full_name text
+  is_active boolean [default: true]
+  created_at timestamptz [default: `now()`]
+  updated_at timestamptz [default: `now()`]
+}
+
+Table role {
+  id uuid [pk]
+  name text [unique, note: "admin, editor, viewer"]
+  description text
+}
+
+Table permission {
+  id uuid [pk]
+  name text [unique]
+  description text
+}
+
+Table role_permission {
+  role_id uuid [ref: > role.id]
+  permission_id uuid [ref: > permission.id]
+  indexes {
+    (role_id, permission_id) [pk]
+  }
+}
+
+Table user_role {
+  user_id uuid [ref: > app_user.id]
+  role_id uuid [ref: > role.id]
+  indexes {
+    (user_id, role_id) [pk]
+  }
+}
+
+Table user_invitation {
+  id uuid [pk]
+  email text
+  invited_by uuid [ref: > app_user.id]
+  token text [unique]
+  status text [note: "pending|accepted|revoked|expired", default: 'pending']
+  expires_at timestamptz
+  created_at timestamptz [default: `now()`]
+}
+
+Table task {
+  id uuid [pk]
+  title text
+  body text
+  assigned_to uuid [ref: > app_user.id]
+  due_at timestamptz
+  status text [note: "open|in_progress|done|cancelled", default: 'open']
+  created_by uuid [ref: > app_user.id]
+  created_at timestamptz [default: `now()`]
+  updated_at timestamptz [default: `now()`]
+}
+
+Table notification {
+  id uuid [pk]
+  user_id uuid [ref: > app_user.id]
+  subject text
+  body text
+  task_id uuid [ref: > task.id]
+  sent_at timestamptz
+}
+
+Table media_asset {
+  id uuid [pk]
+  url text
+  type media_type
+  width int
+  height int
+  duration_seconds int
+  created_at timestamptz [default: `now()`]
+}
+
+Table advertisement {
+  id uuid [pk]
+  title text
+  body text
+  cover_media_id uuid [ref: > media_asset.id]
+  created_by uuid [ref: > app_user.id]
+  status publish_status [default: 'draft']
+  published_at timestamptz
+  created_at timestamptz [default: `now()`]
+  updated_at timestamptz [default: `now()`]
+}
+
+Table advertisement_media {
+  ad_id uuid [ref: > advertisement.id]
+  media_id uuid [ref: > media_asset.id]
+  sort_order int [default: 1]
+  indexes {
+    (ad_id, media_id) [pk]
+  }
+}
+
+Table sport {
+  id uuid [pk]
+  name text [unique]
+  description text
+}
+
+Table age_category {
+  id uuid [pk]
+  name text [unique]
+  min_age int
+  max_age int
+}
+
+Table team {
+  id uuid [pk]
+  sport_id uuid [ref: > sport.id]
+  name text
+  age_category_id uuid [ref: > age_category.id]
+  coach_name text
+  is_club_team boolean [default: true]
+  indexes {
+    (sport_id, name) [unique]
+  }
+}
+
+Table player {
+  id uuid [pk]
+  full_name text
+  birthdate date
+  position text
+  bio text
+  photo_media_id uuid [ref: > media_asset.id]
+}
+
+Table team_player {
+  team_id uuid [ref: > team.id]
+  player_id uuid [ref: > player.id]
+  jersey_number int
+  joined_at date
+  indexes {
+    (team_id, player_id) [pk]
+  }
+}
+
+Table competition {
+  id uuid [pk]
+  sport_id uuid [ref: > sport.id]
+  name text
+  type competition_type
+  season text
+  start_date date
+  end_date date
+  description text
+}
+
+Table competition_team {
+  competition_id uuid [ref: > competition.id]
+  team_id uuid [ref: > team.id]
+  group_name text
+  indexes {
+    (competition_id, team_id) [pk]
+  }
+}
+
+Table league_table {
+  competition_id uuid [ref: > competition.id]
+  team_id uuid [ref: > team.id]
+  played int [default: 0]
+  won int [default: 0]
+  drawn int [default: 0]
+  lost int [default: 0]
+  goals_for int [default: 0]
+  goals_against int [default: 0]
+  goal_diff int [note: "generated: goals_for - goals_against"]
+  points int [default: 0]
+  position int
+  indexes {
+    (competition_id, team_id) [pk]
+  }
+}
+
+Table match {
+  id uuid [pk]
+  sport_id uuid [ref: > sport.id]
+  competition_id uuid [ref: > competition.id]
+  home_team_id uuid [ref: > team.id]
+  away_team_id uuid [ref: > team.id]
+  home_score int
+  away_score int
+  venue text
+  starts_at timestamptz
+  status match_status [default: 'scheduled']
+  notes text
+}
+
+Table match_player {
+  match_id uuid [ref: > match.id]
+  team_id uuid [ref: > team.id]
+  player_id uuid [ref: > player.id]
+  started boolean
+  minutes_played int
+  goals int
+  assists int
+  cards text
+  indexes {
+    (match_id, player_id) [pk]
+  }
+}
+
+Table championship {
+  id uuid [pk]
+  sport_id uuid [ref: > sport.id]
+  name text
+  obtained_on date
+  description text
+  media_id uuid [ref: > media_asset.id]
+}
+
+Table star {
+  id uuid [pk]
+  player_id uuid [ref: > player.id]
+  sport_id uuid [ref: > sport.id]
+  title text
+  description text
+  media_id uuid [ref: > media_asset.id]
+  awarded_for star_award_for [default: 'tournament']
+  awarded_at date
+  competition_id uuid [ref: > competition.id]
+}
+
