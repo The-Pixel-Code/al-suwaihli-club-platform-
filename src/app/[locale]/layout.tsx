@@ -1,18 +1,24 @@
 // Updated src/app/[locale]/layout.tsx
-import { Almarai } from "next/font/google";
+import { Almarai, Inter } from "next/font/google";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 import { Toaster } from "@/components/ui/sonner";
 import { AppProviders } from "@/components/providers";
+import { ResponsiveNavbar } from "@/components/navigation/responsive-navbar";
 import "./globals.css";
 
-// Importing Google font
+// Importing Google fonts
 const almarai = Almarai({
   subsets: ["arabic"],
   weight: ["300", "400", "700", "800"],
   variable: "--font-almarai",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 // Generate metadata for Arabic and English locales
@@ -49,8 +55,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
-      <body className={`${almarai.variable} font-almarai antialiased`}>
+      <body className={`${almarai.variable} ${inter.variable} ${locale === 'ar' ? 'font-almarai' : 'font-inter'} antialiased`}>
         <AppProviders locale={locale} session={null}>
+          <ResponsiveNavbar />
           {children}
           <Toaster />
         </AppProviders>
