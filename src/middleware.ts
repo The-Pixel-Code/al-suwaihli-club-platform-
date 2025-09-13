@@ -40,19 +40,19 @@ export default withAuth(
           return !token;
         }
 
-        // For protected routes, check if user is authenticated
-        if (!token) {
+        // For protected routes, check if user is authenticated ONLY when needed
+        if (requiresAuth(cleanPath) && !token) {
           return false;
         }
 
         // Check role-based access for admin routes
         const requiredRoles = getRequiredRoles(cleanPath);
         if (requiredRoles.length > 0) {
-          return requiredRoles.includes(token.role as string);
+          return requiredRoles.includes(token?.role as string);
         }
 
-        // For other protected routes, just check if user is authenticated
-        return requiresAuth(cleanPath) ? !!token : true;
+        // For other routes that don't require auth, allow access
+        return true;
       },
     },
   }
@@ -60,8 +60,8 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    // Skip all internal paths (_next)
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    // Skip internal/static paths and public assets
+    '/((?!_next/static|_next/image|favicon.ico|assets/).*)',
     // Always run for API routes
     '/api/(.*)',
   ],
