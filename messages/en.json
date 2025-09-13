@@ -2,6 +2,47 @@
         "title": "Suwaihli Club - Misrata",
         "description": "The official site of Suwaihli Sports, Cultural, and Social Club in Misrata."
     },
+    "Navigation": {
+        "clubName": "Al-Suwaihli Club",
+        "established": "Established",
+        "home": "Home",
+        "about": "About Us",
+        "history": "Our History",
+        "historyDesc": "The club's journey since 1944",
+        "mission": "Our Mission",
+        "missionDesc": "Our goals and values",
+        "board": "Board of Directors",
+        "boardDesc": "Club leadership",
+        "sports": "Sports Activities",
+        "football": "Football",
+        "footballDesc": "Football team and academy",
+        "basketball": "Basketball",
+        "basketballDesc": "Basketball team",
+        "volleyball": "Volleyball",
+        "volleyballDesc": "Volleyball team",
+        "otherSports": "Other Sports",
+        "otherSportsDesc": "Various sports activities",
+        "cultural": "Cultural Events",
+        "news": "News",
+        "contact": "Contact Us"
+    },
+    "Hero": {
+        "badge": "Al-Suwaihli Sports, Cultural & Social Club",
+        "title": {
+            "part1": "Al-Suwaihli Club",
+            "part2": "Since 1944"
+        },
+        "subtitle": "A prestigious club combining sports, culture, and social activities, serving the Misrata community for over 80 years",
+        "stats": {
+            "trophies": "Championships",
+            "members": "Members",
+            "founded": "Founded"
+        },
+        "cta": {
+            "join": "Join Us",
+            "learn": "Learn More"
+        }
+    },
     "welcome": "Welcome to our application!",
     "login": "Please log in to continue.",
     "logout": "You have successfully logged out.",
