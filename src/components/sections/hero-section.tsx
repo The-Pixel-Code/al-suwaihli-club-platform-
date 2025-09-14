@@ -257,7 +257,7 @@ export const HeroSection = () => {
                   </motion.div>
                   {/* Animated 3D models */}
                   <div
-                    className="relative "
+                    className="relative"
                   >
                     {/* Animated 3D models */}
                     <SoccerBall3D scale={4} />
