@@ -60,8 +60,8 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    // Skip internal/static paths and public assets
-    '/((?!_next/static|_next/image|favicon.ico|assets/).*)',
+    // Skip internal/static paths and public assets (including models and any file with an extension)
+    '/((?!_next/static|_next/image|favicon.ico|assets/|models/|.*\\..*).*)',
     // Always run for API routes
     '/api/(.*)',
   ],
