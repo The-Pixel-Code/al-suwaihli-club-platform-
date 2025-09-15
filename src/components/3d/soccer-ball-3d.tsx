@@ -36,7 +36,7 @@ function SoccerBallModel({
   floatIntensity?: number;
 }) {
   const modelRef = useRef<THREE.Group>(null);
-  const { scene } = useGLTF('/models/SoccerBall.glb');
+  const { scene } = useGLTF('/models/soccer-ball.glb');
   
   useFrame((state, delta) => {
     if (modelRef.current) {
@@ -169,6 +169,3 @@ export function SoccerBall3D({
     </div>
   );
 }
-
-// Preload the model
-useGLTF.preload('/models/soccer-ball.glb');
