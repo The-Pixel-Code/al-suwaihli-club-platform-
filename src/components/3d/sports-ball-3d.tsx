@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useRef, Suspense, useState, useEffect } from 'react';
@@ -9,12 +10,14 @@ import {
   Center,
   Html,
   useProgress,
+  Float,
+  SpotLight,
 } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'motion/react';
 
-// Sport types
-export type SportType = 'soccer' | 'basketball' | 'volleyball';
+// Enhanced sport types with more options
+export type SportType = 'soccer' | 'basketball' | 'volleyball' | 'tennis' | 'chess' | 'table-tennis';
 
 // Loading component
 function LoadingProgress() {
@@ -29,50 +32,304 @@ function LoadingProgress() {
   );
 }
 
-// Individual sport ball model component
-function SportBallModel({ 
+// Individual sport model component with enhanced animations
+function SportModel({ 
   sportType,
   scale = 1,
   rotationSpeed = 0.5,
   floatIntensity = 0.1,
-  isActive = true,
-  // onLoadError,
+  visible = true,
+  fadeIn = true,
 }: { 
   sportType: SportType;
   scale?: number;
   rotationSpeed?: number;
   floatIntensity?: number;
-  isActive?: boolean;
-  // onLoadError?: () => void;
+  visible?: boolean;
+  fadeIn?: boolean;
 }) {
   const modelRef = useRef<THREE.Group>(null);
-  const { scene } = useGLTF(`/models/${sportType}-ball.glb`);
+  const groupRef = useRef<THREE.Group>(null);
   
+  // Try to load GLB model, fallback to procedural geometry
+  let scene;
+  try {
+    const gltf = useGLTF(`/models/${sportType}-ball.glb`);
+    scene = gltf.scene;
+  } catch (error) {
+    console.log(`GLB model not found for ${sportType}, using fallback, Error: ${error}`);
+    scene = null;
+  }
+
   useFrame((state, delta) => {
-    if (modelRef.current && isActive) {
-      modelRef.current.rotation.y += delta * rotationSpeed;
-      // Add subtle floating effect
-      modelRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * floatIntensity;
+    if (!visible) return;
+
+    // Model rotation and floating
+    if (modelRef.current) {
+      // Different rotation patterns for different sports
+      switch (sportType) {
+        case 'soccer':
+          modelRef.current.rotation.y += delta * rotationSpeed;
+          modelRef.current.rotation.x += delta * 0.3;
+          break;
+        case 'basketball':
+          modelRef.current.rotation.y += delta * rotationSpeed * 1.2;
+          modelRef.current.rotation.z = Math.sin(state.clock.elapsedTime) * 0.1;
+          // Bouncing effect for basketball
+          modelRef.current.position.y = Math.sin(state.clock.elapsedTime * 2) * 0.1;
+          break;
+        case 'volleyball':
+          modelRef.current.rotation.y += delta * rotationSpeed;
+          modelRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.8) * 0.2;
+          break;
+        case 'tennis':
+          modelRef.current.rotation.y += delta * rotationSpeed * 0.8;
+          modelRef.current.position.x = Math.sin(state.clock.elapsedTime * 1.5) * 0.05;
+          break;
+        case 'table-tennis':
+          // Table tennis paddle with swinging motion
+          modelRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 2) * 0.3;
+          modelRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.2;
+          modelRef.current.position.y = Math.sin(state.clock.elapsedTime) * 0.2;
+          break;
+        case 'chess':
+          // Chess knight galloping motion
+          modelRef.current.position.y = Math.abs(Math.sin(state.clock.elapsedTime * 3)) * 0.3;
+          modelRef.current.rotation.y = state.clock.elapsedTime * 0.3;
+          modelRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 2) * 0.05;
+          break;
+        default:
+          modelRef.current.rotation.y += delta * rotationSpeed;
+          break;
+      }
+      
+      // Base floating effect
+      if (sportType !== 'basketball') { // Basketball has its own bouncing
+        modelRef.current.position.y += Math.sin(state.clock.elapsedTime * 1.5) * floatIntensity * delta * 2;
+      }
+    }
+    
+    // Smooth fade in/out transition
+    if (groupRef.current) {
+      const targetOpacity = visible && fadeIn ? 1 : 0;
+      groupRef.current.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material) {
+          const material = Array.isArray(child.material) ? child.material[0] : child.material;
+          if (material instanceof THREE.MeshStandardMaterial) {
+            material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, delta * 8);
+            material.transparent = true;
+          }
+        }
+      });
     }
   });
 
-  // Clone the scene to avoid issues with multiple uses
-  const clonedScene = scene.clone();
-  
+  // If GLB model is available, use it
+  if (scene) {
+    const clonedScene = scene.clone();
+    return (
+      <Float
+        speed={sportType === 'chess' ? 0.5 : 1}
+        rotationIntensity={0.2}
+        floatIntensity={0.3}
+        floatingRange={[-0.05, 0.05]}
+      >
+        <group ref={groupRef} visible={visible}>
+          <group ref={modelRef}>
+            <Center>
+              <primitive 
+                object={clonedScene} 
+                scale={scale}
+              />
+            </Center>
+          </group>
+        </group>
+      </Float>
+    );
+  }
+
+  // Fallback procedural models
   return (
-    <group ref={modelRef}>
-      <Center>
-        <primitive 
-          object={clonedScene} 
-          scale={scale}
-        />
-      </Center>
+    <Float
+      speed={1}
+      rotationIntensity={0.2}
+      floatIntensity={0.3}
+      floatingRange={[-0.05, 0.05]}
+    >
+      <group ref={groupRef} visible={visible}>
+        <group ref={modelRef}>
+          {sportType === 'soccer' && <FallbackSoccer scale={scale} />}
+          {sportType === 'basketball' && <FallbackBasketball scale={scale} />}
+          {sportType === 'volleyball' && <FallbackVolleyball scale={scale} />}
+          {sportType === 'tennis' && <FallbackTennis scale={scale} />}
+          {sportType === 'table-tennis' && <FallbackTableTennis scale={scale} />}
+          {sportType === 'chess' && <FallbackChess scale={scale} />}
+        </group>
+      </group>
+    </Float>
+  );
+}
+
+// Fallback procedural models
+function FallbackSoccer({ scale }: { scale: number }) {
+  return (
+    <>
+      <mesh castShadow receiveShadow scale={scale}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.4} transparent opacity={0} />
+      </mesh>
+      {/* Pentagon pattern */}
+      {[...Array(20)].map((_, i) => {
+        const phi = Math.acos(-1 + (2 * i) / 20);
+        const theta = Math.sqrt(20 * Math.PI) * phi;
+        return (
+          <mesh
+            key={i}
+            position={[
+              Math.cos(theta) * Math.sin(phi) * scale * 1.01,
+              Math.sin(theta) * Math.sin(phi) * scale * 1.01,
+              Math.cos(phi) * scale * 1.01,
+            ]}
+            scale={scale}
+          >
+            <circleGeometry args={[0.15, 5]} />
+            <meshStandardMaterial 
+              color={i % 3 === 0 ? "#000000" : "#ffffff"} 
+              transparent 
+              opacity={0} 
+            />
+          </mesh>
+        );
+      })}
+    </>
+  );
+}
+
+function FallbackBasketball({ scale }: { scale: number }) {
+  return (
+    <>
+      <mesh castShadow receiveShadow scale={scale}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color="#ee6730" roughness={0.6} transparent opacity={0} />
+      </mesh>
+      {/* Basketball lines */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} scale={scale}>
+        <torusGeometry args={[1.01, 0.02, 8, 100]} />
+        <meshStandardMaterial color="#000000" transparent opacity={0} />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]} scale={scale}>
+        <torusGeometry args={[1.01, 0.02, 8, 100]} />
+        <meshStandardMaterial color="#000000" transparent opacity={0} />
+      </mesh>
+    </>
+  );
+}
+
+function FallbackVolleyball({ scale }: { scale: number }) {
+  return (
+    <>
+      <mesh castShadow receiveShadow scale={scale}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.3} transparent opacity={0} />
+      </mesh>
+      {/* Volleyball pattern */}
+      <mesh scale={scale}>
+        <sphereGeometry args={[1.01, 32, 32]} />
+        <meshStandardMaterial color="#ff6b6b" transparent opacity={0} />
+      </mesh>
+    </>
+  );
+}
+
+function FallbackTennis({ scale }: { scale: number }) {
+  return (
+    <>
+      <mesh castShadow receiveShadow scale={scale}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color="#ccff00" roughness={0.8} transparent opacity={0} />
+      </mesh>
+      {/* Tennis ball curve */}
+      <mesh rotation={[0, 0, Math.PI / 4]} scale={scale}>
+        <torusGeometry args={[1.01, 0.03, 8, 100]} />
+        <meshStandardMaterial color="#ffffff" transparent opacity={0} />
+      </mesh>
+    </>
+  );
+}
+
+function FallbackTableTennis({ scale }: { scale: number }) {
+  const ballRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (ballRef.current) {
+      // Ball bouncing motion
+      ballRef.current.position.x = Math.sin(state.clock.elapsedTime * 3) * 0.8;
+      ballRef.current.position.y = Math.abs(Math.sin(state.clock.elapsedTime * 4)) * 0.8 + 0.5;
+      ballRef.current.position.z = Math.sin(state.clock.elapsedTime * 2) * 0.3;
+    }
+  });
+
+  return (
+    <>
+      {/* Paddle */}
+      <group rotation={[0, 0, Math.PI / 8]} scale={scale * 0.7}>
+        {/* Handle */}
+        <mesh position={[0, -1.3, 0]} castShadow>
+          <cylinderGeometry args={[0.08, 0.1, 1, 12]} />
+          <meshStandardMaterial color="#654321" roughness={0.7} transparent opacity={0} />
+        </mesh>
+        {/* Paddle face */}
+        <mesh position={[0, 0, 0]} castShadow receiveShadow>
+          <cylinderGeometry args={[0.85, 0.85, 0.08, 32]} />
+          <meshStandardMaterial color="#8B0000" roughness={0.3} metalness={0.1} transparent opacity={0} />
+        </mesh>
+        {/* Red rubber */}
+        <mesh position={[0, 0, 0.05]} castShadow>
+          <cylinderGeometry args={[0.8, 0.8, 0.02, 32]} />
+          <meshStandardMaterial color="#FF0000" roughness={0.9} transparent opacity={0} />
+        </mesh>
+        {/* Black rubber */}
+        <mesh position={[0, 0, -0.05]} castShadow>
+          <cylinderGeometry args={[0.8, 0.8, 0.02, 32]} />
+          <meshStandardMaterial color="#000000" roughness={0.9} transparent opacity={0} />
+        </mesh>
+      </group>
+      
+      {/* Ping pong ball */}
+      <mesh ref={ballRef} position={[0.5, 0.8, 0]} castShadow scale={scale}>
+        <sphereGeometry args={[0.12, 24, 24]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.1} transparent opacity={0} />
+      </mesh>
+    </>
+  );
+}
+
+function FallbackChess({ scale }: { scale: number }) {
+  return (
+    <group scale={scale * 0.7}>
+      {/* Chess piece base */}
+      <mesh position={[0, -1.2, 0]} castShadow>
+        <cylinderGeometry args={[0.6, 0.7, 0.3, 32]} />
+        <meshStandardMaterial color="#1a1a1a" roughness={0.1} metalness={0.9} transparent opacity={0} />
+      </mesh>
+      
+      {/* Knight body */}
+      <mesh position={[0, -0.4, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.8, 1.4, 0.5]} />
+        <meshStandardMaterial color="#1a1a1a" roughness={0.1} metalness={0.9} transparent opacity={0} />
+      </mesh>
+      
+      {/* Knight head */}
+      <mesh position={[0.3, 0.6, 0]} castShadow rotation={[0, 0, -0.3]}>
+        <coneGeometry args={[0.35, 0.8, 6]} />
+        <meshStandardMaterial color="#1a1a1a" roughness={0.1} metalness={0.9} transparent opacity={0} />
+      </mesh>
     </group>
   );
 }
 
-// Animated transition wrapper for sport balls
-function AnimatedSportBall({
+// Enhanced transition wrapper
+function AnimatedSportsShowcase({
   currentSport,
   scale = 1,
   rotationSpeed = 0.5,
@@ -83,99 +340,41 @@ function AnimatedSportBall({
   rotationSpeed?: number;
   floatIntensity?: number;
 }) {
-  const groupRef = useRef<THREE.Group>(null);
-  const [currentModel, setCurrentModel] = useState(currentSport);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [fadeIn, setFadeIn] = useState(true);
+  const [displayedSport, setDisplayedSport] = useState(currentSport);
 
-  useFrame((state, delta) => {
-    if (groupRef.current) {
-      // Smooth transition effect
-      if (isTransitioning) {
-        groupRef.current.scale.lerp(new THREE.Vector3(0.1, 0.1, 0.1), delta * 8);
-        if (groupRef.current.scale.x < 0.2) {
-          setCurrentModel(currentSport);
-          setIsTransitioning(false);
-        }
-      } else {
-        groupRef.current.scale.lerp(new THREE.Vector3(scale, scale, scale), delta * 6);
-      }
-    }
-  });
+  const allSports: SportType[] = ['soccer', 'basketball', 'volleyball', 'tennis', 'table-tennis', 'chess'];
 
   useEffect(() => {
-    if (currentModel !== currentSport) {
-      setIsTransitioning(true);
+    if (displayedSport !== currentSport) {
+      setFadeIn(false);
+      const timer = setTimeout(() => {
+        setDisplayedSport(currentSport);
+        setFadeIn(true);
+      }, 300); // Fade out duration
+
+      return () => clearTimeout(timer);
     }
-  }, [currentSport, currentModel]);
+  }, [currentSport, displayedSport]);
 
   return (
-    <group ref={groupRef}>
-      <Suspense fallback={null}>
-        <SportBallModel
-          sportType={currentModel}
-          scale={1}
+    <>
+      {allSports.map((sport) => (
+        <SportModel
+          key={sport}
+          sportType={sport}
+          scale={scale}
           rotationSpeed={rotationSpeed}
           floatIntensity={floatIntensity}
-          isActive={!isTransitioning}
+          visible={sport === displayedSport}
+          fadeIn={fadeIn}
         />
-      </Suspense>
-    </group>
+      ))}
+    </>
   );
 }
 
-// Fallback sport balls if models fail to load
-function FallbackSportBall({ 
-  sportType, 
-  scale = 1 
-}: { 
-  sportType: SportType;
-  scale?: number;
-}) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.5;
-      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.1;
-    }
-  });
-
-  const getSportColors = (sport: SportType) => {
-    switch (sport) {
-      case 'soccer':
-        return { primary: "#ffffff", secondary: "#000000" };
-      case 'basketball':
-        return { primary: "#ff6b35", secondary: "#2c1810" };
-      case 'volleyball':
-        return { primary: "#ffffff", secondary: "#ff6b6b" };
-    }
-  };
-
-  const colors = getSportColors(sportType);
-
-  return (
-    <mesh ref={meshRef} scale={scale}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial 
-        color={colors.primary}
-        roughness={0.3}
-        metalness={0.1}
-      />
-      {/* Add sport-specific pattern */}
-      <mesh>
-        <sphereGeometry args={[1.01, 32, 32]} />
-        <meshStandardMaterial 
-          color={colors.secondary}
-          transparent
-          opacity={0.6}
-          roughness={0.4}
-        />
-      </mesh>
-    </mesh>
-  );
-}
-
-// Sport selector controls
+// Enhanced sport selector with more sports
 function SportSelector({ 
   currentSport, 
   onSportChange, 
@@ -185,14 +384,17 @@ function SportSelector({
   onSportChange: (sport: SportType) => void;
   className?: string;
 }) {
-  const sports: { type: SportType; label: string; emoji: string }[] = [
-    { type: 'soccer', label: 'Soccer', emoji: '⚽' },
-    { type: 'basketball', label: 'Basketball', emoji: '🏀' },
-    { type: 'volleyball', label: 'Volleyball', emoji: '🏐' },
+  const sports: { type: SportType; label: string; emoji: string; nameAr: string }[] = [
+    { type: 'soccer', label: 'Soccer', emoji: '⚽', nameAr: 'كرة القدم' },
+    { type: 'basketball', label: 'Basketball', emoji: '🏀', nameAr: 'كرة السلة' },
+    { type: 'volleyball', label: 'Volleyball', emoji: '🏐', nameAr: 'الكرة الطائرة' },
+    { type: 'tennis', label: 'Tennis', emoji: '🎾', nameAr: 'التنس' },
+    { type: 'table-tennis', label: 'Table Tennis', emoji: '🏓', nameAr: 'تنس الطاولة' },
+    { type: 'chess', label: 'Chess', emoji: '♟️', nameAr: 'الشطرنج' },
   ];
 
   return (
-    <div className={`flex gap-2 ${className}`}>
+    <div className={`flex flex-wrap gap-2 justify-center ${className}`}>
       {sports.map((sport) => (
         <motion.button
           key={sport.type}
@@ -200,15 +402,16 @@ function SportSelector({
           whileTap={{ scale: 0.95 }}
           onClick={() => onSportChange(sport.type)}
           className={`
-            px-4 py-2 rounded-full font-medium transition-all duration-200
+            px-3 py-2 rounded-full font-medium transition-all duration-200 text-sm
             ${currentSport === sport.type
-              ? 'bg-red-600 text-white shadow-lg'
+              ? 'bg-red-600 text-white shadow-lg scale-105'
               : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white'
             }
           `}
+          title={sport.nameAr}
         >
-          <span className="mr-2">{sport.emoji}</span>
-          {sport.label}
+          <span className="mr-1">{sport.emoji}</span>
+          <span className="hidden sm:inline">{sport.label}</span>
         </motion.button>
       ))}
     </div>
@@ -234,7 +437,7 @@ class ErrorBoundary extends React.Component<{
   }
 }
 
-// Main SportsBall3D component
+// Main enhanced SportsBall3D component
 export function SportsBall3D({ 
   width = 320, 
   height = 320,
@@ -242,8 +445,10 @@ export function SportsBall3D({
   scale = 3,
   showSelector = true,
   autoRotate = false,
-  autoSwitchInterval = 5000, // Switch sports every 5 seconds
+  autoSwitchInterval = 5000,
   initialSport = 'soccer' as SportType,
+  enableShadows = true,
+  environmentPreset = "city" as any,
 }: {
   width?: number;
   height?: number;
@@ -253,23 +458,26 @@ export function SportsBall3D({
   autoRotate?: boolean;
   autoSwitchInterval?: number;
   initialSport?: SportType;
+  enableShadows?: boolean;
+  environmentPreset?: string;
 }) {
   const [currentSport, setCurrentSport] = useState<SportType>(initialSport);
+
+  const allSports: SportType[] = ['soccer', 'basketball', 'volleyball', 'tennis', 'table-tennis', 'chess'];
 
   // Auto-switch between sports
   useEffect(() => {
     if (autoRotate) {
-      const sports: SportType[] = ['soccer', 'basketball', 'volleyball'];
-      let currentIndex = sports.indexOf(currentSport);
+      let currentIndex = allSports.indexOf(currentSport);
 
       const interval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % sports.length;
-        setCurrentSport(sports[currentIndex]);
+        currentIndex = (currentIndex + 1) % allSports.length;
+        setCurrentSport(allSports[currentIndex]);
       }, autoSwitchInterval);
 
       return () => clearInterval(interval);
     }
-  }, [currentSport, autoRotate, autoSwitchInterval]);
+  }, [currentSport, autoRotate, autoSwitchInterval, allSports]);
 
   return (
     <div className="space-y-4">
@@ -293,8 +501,9 @@ export function SportsBall3D({
         style={{ width, height }}
       >
         <Canvas
+          shadows={enableShadows}
           dpr={[1, 2]}
-          camera={{ position: [0, 0, 5], fov: 45 }}
+          camera={{ position: [0, 0, 6], fov: 35 }}
           style={{ background: 'transparent' }}
         >
           <Suspense fallback={<LoadingProgress />}>
@@ -304,51 +513,89 @@ export function SportsBall3D({
               minPolarAngle={Math.PI / 3}
               maxPolarAngle={Math.PI / 1.5}
               autoRotate={autoRotate}
-              autoRotateSpeed={0.3}
+              autoRotateSpeed={1}
             />
             
-            {/* Lighting */}
-            <ambientLight intensity={0.6} />
+            {/* Enhanced Lighting */}
+            <ambientLight intensity={0.4} />
             <directionalLight
               position={[10, 10, 5]}
-              intensity={1.2}
+              intensity={1.5}
+              castShadow={enableShadows}
+              shadow-mapSize={[2048, 2048]}
+              shadow-camera-near={0.1}
+              shadow-camera-far={50}
+              shadow-camera-left={-10}
+              shadow-camera-right={10}
+              shadow-camera-top={10}
+              shadow-camera-bottom={-10}
             />
-            <pointLight position={[-10, 10, -10]} intensity={0.3} color="#ff6b6b" />
-            <pointLight position={[10, -10, 10]} intensity={0.3} color="#4dabf7" />
+            <pointLight position={[-10, 10, -10]} intensity={0.5} color="#ff6b6b" />
+            <pointLight position={[10, -10, 10]} intensity={0.5} color="#4dabf7" />
             
-            {/* Animated Sport Ball */}
+            {/* Spotlight for dramatic effect */}
+            <SpotLight
+              position={[0, 10, 0]}
+              angle={0.3}
+              penumbra={1}
+              intensity={0.5}
+              castShadow={enableShadows}
+            />
+            
+            {/* Animated Sport Models */}
             <ErrorBoundary 
-              fallback={<FallbackSportBall sportType={currentSport} scale={scale} />}
+              fallback={
+                <SportModel
+                  sportType={currentSport}
+                  scale={scale}
+                  rotationSpeed={0.3}
+                  floatIntensity={0.1}
+                  visible={true}
+                  fadeIn={true}
+                />
+              }
             >
-              <AnimatedSportBall
+              <AnimatedSportsShowcase
                 currentSport={currentSport}
                 scale={scale}
                 rotationSpeed={0.3}
                 floatIntensity={0.1}
               />
             </ErrorBoundary>
-            
-            <Environment preset="city" />
+            <Environment preset={environmentPreset as "apartment" | "city" | "dawn" | "forest" | "lobby" | "night" | "park" | "studio" | "sunset" | "warehouse" | undefined } />
           </Suspense>
         </Canvas>
 
-        {/* Sport Label */}
+        {/* Enhanced Sport Label with transition */}
         <motion.div
           key={currentSport}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium"
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium border border-white/20"
         >
-          {currentSport.charAt(0).toUpperCase() + currentSport.slice(1)}
+          {currentSport.charAt(0).toUpperCase() + currentSport.slice(1).replace('-', ' ')}
         </motion.div>
       </div>
     </div>
   );
 }
 
-// Hook to preload all sport ball models
+// Hook to preload all sport models
 export function usePreloadSportModels() {
-  useGLTF.preload('/models/soccer-ball.glb');
-  useGLTF.preload('/models/basket-ball.glb');
-  useGLTF.preload('/models/volley-ball.glb');
+  const models = [
+    'soccer-ball.glb',
+    'basket-ball.glb', 
+    'volley-ball.glb',
+    'table-tennis-paddle.glb',
+    'chess-knight.glb'
+  ];
+  
+  models.forEach(model => {
+    try {
+      useGLTF.preload(`/models/${model}`);
+    } catch (error) {
+      console.log(`Could not preload ${model}, will use fallback, Error: ${error}`);
+    }
+  });
 }

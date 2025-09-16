@@ -13,8 +13,10 @@
 │   ├── assets/
 │   │   └── Al-Swihli_Misratah.png (55.1 KB)
 │   ├── models/
-│   │   ├── basket-ball.glb (37832.0 KB)
+│   │   ├── basket-ball.glb (22104.0 KB)
+│   │   ├── chess-knight.glb (752.5 KB)
 │   │   ├── soccer-ball.glb (2000.9 KB)
+│   │   ├── table-tennis-paddle.glb (852.3 KB)
 │   │   └── volley-ball.glb (44628.7 KB)
 │   ├── file.svg (0.4 KB)
 │   ├── globe.svg (1.0 KB)
@@ -37,7 +39,8 @@
 │   ├── components/
 │   │   ├── 3d/
 │   │   │   ├── soccer-ball-3d.tsx (4.1 KB)
-│   │   │   └── sports-ball-3d.tsx (9.7 KB)
+│   │   │   ├── sports-ball-3d.tsx (19.6 KB)
+│   │   │   └── sports-showcase-enhanced.tsx (14.6 KB)
 │   │   ├── admin/
 │   │   │   └── members-table.tsx (2.6 KB)
 │   │   ├── navigation/
@@ -135,7 +138,7 @@
 ├── next.config.ts (0.7 KB)
 ├── package.json (2.8 KB)
 ├── postcss.config.mjs (0.1 KB)
-├── project-structure.txt (4.5 KB)
+├── project-structure.txt (5.7 KB)
 ├── README.md (9.4 KB)
 ├── tsconfig.json (0.6 KB)
 └── WARP.md (6.3 KB)
