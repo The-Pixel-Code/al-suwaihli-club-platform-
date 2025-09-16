@@ -9,12 +9,14 @@ import { useTranslations } from "next-intl";
 import useLanguage from "@/hooks/use-language";
 
 import { cn } from "@/lib/utils";
-import { SoccerBall3D } from "@/components/3d/soccer-ball-3d";
+import { SportsBall3D, usePreloadSportModels } from "@/components/3d/sports-ball-3d";
 
 export const HeroSection = () => {
   const t = useTranslations("Hero");
   const { lang: locale, isArabic: isRtl } = useLanguage();
 
+  // Preload all sport models for smooth transitions
+  usePreloadSportModels();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#F5F5FA] via-[#F5F5FA] to-[#FFE5E5]">
@@ -255,19 +257,24 @@ export const HeroSection = () => {
                       />
                     </svg>
                   </motion.div>
-                  {/* Animated 3D models */}
-                  <div
-                    className="relative"
-                  >
-                    {/* Animated 3D models */}
-                    <SoccerBall3D scale={4} />
+                  
+                  {/* Animated 3D Sports Ball with auto-switching */}
+                  <div className="relative">
+                    <SportsBall3D 
+                      scale={4}
+                      autoRotate={true}
+                      autoSwitchInterval={4000}
+                      showSelector={false}
+                      initialSport="soccer"
+                      className="drop-shadow-2xl"
+                    />
                     {/* Glow Effect */}
                     <div className="absolute inset-0 bg-gradient-to-t from-red-600/20 to-transparent rounded-full blur-3xl -z-10" />
                   </div>
                 </div>
               </motion.div>
 
-              {/* Floating Elements */}
+              {/* Floating Elements - Updated with all sports */}
               <motion.div
                 animate={{
                   y: [0, -10, 0],
@@ -310,6 +317,21 @@ export const HeroSection = () => {
                 className="absolute top-20 -left-20 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg"
               >
                 <span className="text-2xl">🏆</span>
+              </motion.div>
+
+              <motion.div
+                animate={{
+                  y: [0, 8, 0],
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5,
+                }}
+                className="absolute top-20 -right-20 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg"
+              >
+                <span className="text-2xl">🏀</span>
               </motion.div>
             </div>
           </motion.div>
