@@ -19,6 +19,40 @@ import { motion } from 'motion/react';
 // Enhanced sport types with more options
 export type SportType = 'soccer' | 'basketball' | 'volleyball' | 'tennis' | 'chess' | 'table-tennis';
 
+// Model configuration with correct file names and scales
+const MODEL_CONFIG = {
+  soccer: {
+    file: 'soccer-ball.glb',
+    scale: 1.0,  // This is our reference scale
+    position: [0, 0, 0]
+  },
+  basketball: {
+    file: 'basket-ball.glb',
+    scale: 0.15,  // Much smaller since basket-ball.glb is large
+    position: [0, 0, 0]
+  },
+  volleyball: {
+    file: 'volley-ball.glb',
+    scale: 0.08,  // Even smaller since volley-ball.glb is very large
+    position: [0, 0, 0]
+  },
+  tennis: {
+    file: 'tennis-ball.glb',
+    scale: 1.0,
+    position: [0, 0, 0]
+  },
+  'table-tennis': {
+    file: 'table-tennis-paddle.glb',
+    scale: 0.8,
+    position: [0, 0, 0]
+  },
+  chess: {
+    file: 'chess-knight.glb',
+    scale: 0.5,  // Adjust based on actual size
+    position: [0, 0, 0]
+  }
+};
+
 // Loading component
 function LoadingProgress() {
   const { progress } = useProgress();
@@ -32,7 +66,7 @@ function LoadingProgress() {
   );
 }
 
-// Individual sport model component with enhanced animations
+// Individual sport model component with enhanced animations and proper scaling
 function SportModel({ 
   sportType,
   scale = 1,
@@ -50,16 +84,11 @@ function SportModel({
 }) {
   const modelRef = useRef<THREE.Group>(null);
   const groupRef = useRef<THREE.Group>(null);
-  
-  // Try to load GLB model, fallback to procedural geometry
-  let scene;
-  try {
-    const gltf = useGLTF(`/models/${sportType}-ball.glb`);
-    scene = gltf.scene;
-  } catch (error) {
-    console.log(`GLB model not found for ${sportType}, using fallback, Error: ${error}`);
-    scene = null;
-  }
+
+  const config = MODEL_CONFIG[sportType];
+
+  const gltf = useGLTF(`/models/${config.file}`);
+  const scene = gltf.scene;
 
   useFrame((state, delta) => {
     if (!visible) return;
@@ -103,8 +132,8 @@ function SportModel({
           break;
       }
       
-      // Base floating effect
-      if (sportType !== 'basketball') { // Basketball has its own bouncing
+      // Base floating effect (except basketball which has bouncing)
+      if (sportType !== 'basketball') {
         modelRef.current.position.y += Math.sin(state.clock.elapsedTime * 1.5) * floatIntensity * delta * 2;
       }
     }
@@ -115,7 +144,7 @@ function SportModel({
       groupRef.current.traverse((child) => {
         if (child instanceof THREE.Mesh && child.material) {
           const material = Array.isArray(child.material) ? child.material[0] : child.material;
-          if (material instanceof THREE.MeshStandardMaterial) {
+          if (material instanceof THREE.MeshStandardMaterial || material instanceof THREE.MeshPhysicalMaterial) {
             material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, delta * 8);
             material.transparent = true;
           }
@@ -124,31 +153,113 @@ function SportModel({
     }
   });
 
-  // If GLB model is available, use it
-  if (scene) {
-    const clonedScene = scene.clone();
-    return (
-      <Float
-        speed={sportType === 'chess' ? 0.5 : 1}
-        rotationIntensity={0.2}
-        floatIntensity={0.3}
-        floatingRange={[-0.05, 0.05]}
-      >
-        <group ref={groupRef} visible={visible}>
-          <group ref={modelRef}>
-            <Center>
-              <primitive 
-                object={clonedScene} 
-                scale={scale}
-              />
-            </Center>
-          </group>
-        </group>
-      </Float>
-    );
-  }
+  const clonedScene = scene.clone();
+  // Apply model-specific scale and position
+  const finalScale = scale * config.scale;
 
-  // Fallback procedural models
+  return (
+    <Float
+      speed={sportType === 'chess' ? 0.5 : 1}
+      rotationIntensity={0.2}
+      floatIntensity={0.3}
+      floatingRange={[-0.05, 0.05]}
+    >
+      <group ref={groupRef} visible={visible}>
+        <group ref={modelRef} position={config.position as number | THREE.Vector3 | [x: number, y: number, z: number] | readonly [x: number, y: number, z: number] | Readonly<THREE.Vector3> | undefined}>
+          <Center>
+            <primitive
+              object={clonedScene}
+              scale={finalScale}
+            />
+          </Center>
+        </group>
+      </group>
+    </Float>
+  );
+}
+
+// Fallback sport model component for error cases
+function FallbackSportModel({
+  sportType,
+  scale = 1,
+  rotationSpeed = 0.5,
+  floatIntensity = 0.1,
+  visible = true,
+  fadeIn = true,
+}: {
+  sportType: SportType;
+  scale?: number;
+  rotationSpeed?: number;
+  floatIntensity?: number;
+  visible?: boolean;
+  fadeIn?: boolean;
+}) {
+  const modelRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state, delta) => {
+    if (!visible) return;
+
+    // Model rotation and floating
+    if (modelRef.current) {
+      // Different rotation patterns for different sports
+      switch (sportType) {
+        case 'soccer':
+          modelRef.current.rotation.y += delta * rotationSpeed;
+          modelRef.current.rotation.x += delta * 0.3;
+          break;
+        case 'basketball':
+          modelRef.current.rotation.y += delta * rotationSpeed * 1.2;
+          modelRef.current.rotation.z = Math.sin(state.clock.elapsedTime) * 0.1;
+          // Bouncing effect for basketball
+          modelRef.current.position.y = Math.sin(state.clock.elapsedTime * 2) * 0.1;
+          break;
+        case 'volleyball':
+          modelRef.current.rotation.y += delta * rotationSpeed;
+          modelRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.8) * 0.2;
+          break;
+        case 'tennis':
+          modelRef.current.rotation.y += delta * rotationSpeed * 0.8;
+          modelRef.current.position.x = Math.sin(state.clock.elapsedTime * 1.5) * 0.05;
+          break;
+        case 'table-tennis':
+          // Table tennis paddle with swinging motion
+          modelRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 2) * 0.3;
+          modelRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.2;
+          modelRef.current.position.y = Math.sin(state.clock.elapsedTime) * 0.2;
+          break;
+        case 'chess':
+          // Chess knight galloping motion
+          modelRef.current.position.y = Math.abs(Math.sin(state.clock.elapsedTime * 3)) * 0.3;
+          modelRef.current.rotation.y = state.clock.elapsedTime * 0.3;
+          modelRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 2) * 0.05;
+          break;
+        default:
+          modelRef.current.rotation.y += delta * rotationSpeed;
+          break;
+      }
+
+      // Base floating effect (except basketball which has bouncing)
+      if (sportType !== 'basketball') {
+        modelRef.current.position.y += Math.sin(state.clock.elapsedTime * 1.5) * floatIntensity * delta * 2;
+      }
+    }
+
+    // Smooth fade in/out transition
+    if (groupRef.current) {
+      const targetOpacity = visible && fadeIn ? 1 : 0;
+      groupRef.current.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material) {
+          const material = Array.isArray(child.material) ? child.material[0] : child.material;
+          if (material instanceof THREE.MeshStandardMaterial || material instanceof THREE.MeshPhysicalMaterial) {
+            material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, delta * 8);
+            material.transparent = true;
+          }
+        }
+      });
+    }
+  });
+
   return (
     <Float
       speed={1}
@@ -543,9 +654,9 @@ export function SportsBall3D({
             />
             
             {/* Animated Sport Models */}
-            <ErrorBoundary 
+            <ErrorBoundary
               fallback={
-                <SportModel
+                <FallbackSportModel
                   sportType={currentSport}
                   scale={scale}
                   rotationSpeed={0.3}
@@ -581,21 +692,15 @@ export function SportsBall3D({
   );
 }
 
-// Hook to preload all sport models
+// Hook to preload all sport models with correct file names
 export function usePreloadSportModels() {
-  const models = [
-    'soccer-ball.glb',
-    'basket-ball.glb', 
-    'volley-ball.glb',
-    'table-tennis-paddle.glb',
-    'chess-knight.glb'
-  ];
+  const models = Object.values(MODEL_CONFIG).map(config => config.file);
   
   models.forEach(model => {
     try {
       useGLTF.preload(`/models/${model}`);
     } catch (error) {
-      console.log(`Could not preload ${model}, will use fallback, Error: ${error}`);
+      console.log(`Could not preload ${model}, will use fallback, Error : ${error}`);
     }
   });
 }
