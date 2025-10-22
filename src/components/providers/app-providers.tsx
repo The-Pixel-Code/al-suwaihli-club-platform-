@@ -23,7 +23,8 @@ export async function AppProviders({
       <SessionProvider session={session}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          // FIXME: change default Theme to system
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
