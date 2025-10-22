@@ -2,7 +2,27 @@ import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ['postgres', 'drizzle-orm', 'pg', 'net', 'tls', 'fs', 'path', 'crypto'],
+  transpilePackages: ["motion"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
+  serverExternalPackages: [
+    "postgres",
+    "drizzle-orm",
+    "pg",
+    "net",
+    "tls",
+    "fs",
+    "path",
+    "crypto",
+  ],
   webpack: (config, { isServer }) => {
     if (!isServer) {
       // Don't bundle server-only packages on the client
