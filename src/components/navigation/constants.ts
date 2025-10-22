@@ -1,66 +1,84 @@
 import { NavItem } from "./types";
 
-export const getNavItems = (t: (key: string) => string, locale: string): NavItem[] => [
+export const getNavItems = (
+  t: (key: string) => string,
+  locale: string
+): NavItem[] => [
   {
     id: "home",
     label: t("home"),
     href: `/${locale}`,
   },
   {
-    id: "about",
-    label: t("about"),
+    id: "club",
+    label: t("club"),
     children: [
       {
-        label: t("history"),
-        href: `/${locale}/about/history`,
-        description: t("historyDesc"),
+        label: t("clubHistory"),
+        href: `/${locale}/club/history`,
+        description: t("clubHistoryDesc"),
       },
       {
-        label: t("mission"),
-        href: `/${locale}/about/mission`,
-        description: t("missionDesc"),
+        label: t("championships"),
+        href: `/${locale}/club/championships`,
+        description: t("championshipsDesc"),
       },
       {
-        label: t("board"),
-        href: `/${locale}/about/board`,
-        description: t("boardDesc"),
+        label: t("clubMagazine"),
+        href: `/${locale}/club/magazine`,
+        description: t("clubMagazineDesc"),
+      },
+      {
+        label: t("cityOfMisrata"),
+        href: `/${locale}/club/city-of-misrata`,
+        description: t("cityOfMisrataDesc"),
+      },
+      {
+        label: t("clubLegends"),
+        href: `/${locale}/club/legends`,
+        description: t("clubLegendsDesc"),
       },
     ],
   },
   {
     id: "sports",
-    label: t("sports"),
+    label: t("sportsActivities"),
     children: [
       {
-        label: t("football"),
+        label: t("footballWithAgeGroups"),
         href: `/${locale}/sports/football`,
-        description: t("footballDesc"),
+        description: t("footballWithAgeGroupsDesc"),
       },
       {
-        label: t("basketball"),
-        href: `/${locale}/sports/basketball`,
-        description: t("basketballDesc"),
+        label: t("handballWithAgeGroups"),
+        href: `/${locale}/sports/handball`,
+        description: t("handballWithAgeGroupsDesc"),
       },
       {
-        label: t("volleyball"),
+        label: t("volleyballWithAgeGroups"),
         href: `/${locale}/sports/volleyball`,
-        description: t("volleyballDesc"),
+        description: t("volleyballWithAgeGroupsDesc"),
+      },
+      {
+        label: t("futsal"),
+        href: `/${locale}/sports/futsal`,
+        description: t("futsalDesc"),
+      },
+      {
+        label: t("otherSports"),
+        href: `/${locale}/sports/other`,
+        description: t("otherSportsDesc"),
       },
     ],
   },
   {
-    id: "cultural",
-    label: t("cultural"),
-    href: `/${locale}/cultural-events`,
+    id: "schedule",
+    label: t("leagueSchedule"),
+    href: `/${locale}/league-schedule`,
   },
   {
-    id: "news",
-    label: t("news"),
-    href: `/${locale}/news`,
-  },
-  {
-    id: "contact",
-    label: t("contact"),
-    href: `/${locale}/contact`,
+    id: "ClubRadio",
+    label: t("clubRadio"),
+    href: `/${locale}/club-radio`,
   },
 ];
