@@ -11,18 +11,18 @@ interface ClubLogoProps {
   priority?: boolean;
 }
 
-export function ClubLogo({ 
-  width = 100, 
-  height = 100, 
+export function ClubLogo({
+  width = 100,
+  height = 100,
   className = "",
-  priority = false 
+  priority = false,
 }: ClubLogoProps) {
   const [imgError, setImgError] = useState(false);
 
   if (imgError) {
     // Fallback to regular img tag if Next Image fails
     return (
-      <img
+      <Image
         src="/assets/Al-Swihli_Misratah.png"
         alt="Al-Suwaihli Club"
         width={width}

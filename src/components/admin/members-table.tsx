@@ -46,8 +46,12 @@ const columns: ColumnDef<Member>[] = [
     header: "Status",
     cell: ({ row }) => {
       const status = row.getValue("status") as string;
-      const variant = status === "ACTIVE" ? "success" : 
-                    status === "PENDING" ? "warning" : "destructive";
+      const variant: "default" | "secondary" | "destructive" | "outline" =
+        status === "ACTIVE"
+          ? "secondary"
+          : status === "PENDING"
+          ? "outline"
+          : "destructive";
       return <Badge variant={variant}>{status}</Badge>;
     },
   },
@@ -61,9 +65,7 @@ const columns: ColumnDef<Member>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const member = row.original;
-
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
