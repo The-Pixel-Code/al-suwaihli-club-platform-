@@ -1,25 +1,22 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { Sparkles, Trophy, Users, Calendar } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 
 import { useTranslations } from "next-intl";
 import useLanguage from "@/hooks/use-language";
 
 import { cn } from "@/lib/utils";
-import { SportsBall3D, usePreloadSportModels } from "@/components/3d/sports-ball-3d";
+import { ClubLogo } from "@/components/ui/club-logo";
+import { SportBall } from "@/components/3d/sport-ball";
 
 export const HeroSection = () => {
   const t = useTranslations("Hero");
-  const { lang: locale, isArabic: isRtl } = useLanguage();
-
-  // Preload all sport models for smooth transitions
-  usePreloadSportModels();
+  const { isArabic: isRtl } = useLanguage();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#F5F5FA] via-[#F5F5FA] to-[#FFE5E5]">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-[#F5F5FA] via-[#F5F5FA] to-[#FFE5E5]">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating Circles */}
@@ -139,71 +136,6 @@ export const HeroSection = () => {
             >
               {t("subtitle")}
             </motion.p>
-
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className={cn(
-                "flex flex-wrap gap-8 mb-8",
-                isRtl ? "lg:justify-end" : "lg:justify-start",
-                "justify-center"
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-amber-500" />
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">80+</div>
-                  <div className="text-sm text-gray-600">
-                    {t("stats.trophies")}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-red-600" />
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">5000+</div>
-                  <div className="text-sm text-gray-600">
-                    {t("stats.members")}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-blue-600" />
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">1944</div>
-                  <div className="text-sm text-gray-600">
-                    {t("stats.founded")}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className={cn(
-                "flex flex-wrap gap-4",
-                isRtl ? "lg:justify-end" : "lg:justify-start",
-                "justify-center"
-              )}
-            >
-              <Link
-                href={`/${locale}/membership`}
-                className="px-8 py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-              >
-                {t("cta.join")}
-              </Link>
-              <Link
-                href={`/${locale}/about`}
-                className="px-8 py-3 bg-white text-gray-900 font-medium rounded-full hover:bg-gray-50 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-              >
-                {t("cta.learn")}
-              </Link>
-            </motion.div>
           </motion.div>
 
           {/* Logo and Visual Elements */}
@@ -257,19 +189,11 @@ export const HeroSection = () => {
                       />
                     </svg>
                   </motion.div>
-                  
-                  {/* Animated 3D Sports Ball with auto-switching */}
+                  {/* Main Logo*/}
                   <div className="relative">
-                    <SportsBall3D 
-                      scale={4}
-                      autoRotate={true}
-                      autoSwitchInterval={4000}
-                      showSelector={false}
-                      initialSport="soccer"
-                      className="drop-shadow-2xl"
-                    />
+                    <ClubLogo className="w-full h-full md:scale-110 scale-90 md:pr-20 pr-12" />
                     {/* Glow Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-red-600/20 to-transparent rounded-full blur-3xl -z-10" />
+                    <div className="absolute inset-0 bg-linear-to-t from-red-600/20 to-transparent rounded-full blur-3xl -z-10" />
                   </div>
                 </div>
               </motion.div>
@@ -284,9 +208,16 @@ export const HeroSection = () => {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute -top-10 -right-10 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg"
+                className="absolute -top-10 -right-10 rounded-2xl"
               >
-                <span className="text-2xl">🏐</span>
+                <SportBall
+                  sport="soccer"
+                  scale={2.8}
+                  autoRotate={true}
+                  autoRotateSpeed={1.5}
+                  enableShadows={false}
+                  environmentPreset="studio"
+                />
               </motion.div>
 
               <motion.div
@@ -299,9 +230,16 @@ export const HeroSection = () => {
                   ease: "easeInOut",
                   delay: 1,
                 }}
-                className="absolute -bottom-10 -left-10 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg"
+                className="absolute -bottom-10 -left-10 rounded-2xl"
               >
-                <span className="text-2xl">⚽</span>
+                <SportBall
+                  sport="volleyball"
+                  scale={2.8}
+                  autoRotate={true}
+                  autoRotateSpeed={1.5}
+                  enableShadows={false}
+                  environmentPreset="studio"
+                />
               </motion.div>
 
               <motion.div

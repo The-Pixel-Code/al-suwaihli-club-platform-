@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 import useLanguage from "@/hooks/use-language";
@@ -16,33 +16,56 @@ import { getNavItems } from "./constants";
 
 const DesktopMenu = () => {
   const [active, setActive] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { lang: locale, isArabic: isRtl } = useLanguage();
   const t = useTranslations("Navigation");
   const pathname = usePathname();
   const navItems = getNavItems(t, locale);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial scroll position
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div
       className={cn(
-        "fixed top-2 inset-x-0 w-full px-6  mx-auto z-50 flex items-center justify-between bg-transparent",
-        isRtl && "rtl"
+        "fixed top-0 inset-x-0 w-full z-50 transition-all duration-300",
+        isRtl && "rtl",
+        isScrolled ? [
+          "py-2 px-6",
+          "bg-white/80 dark:bg-gray-900/80",
+          "backdrop-blur-lg backdrop-saturate-150",
+          "border-b border-gray-200/20 dark:border-gray-700/20",
+          "shadow-lg"
+        ] : [
+          "py-4 px-6",
+          "bg-transparent"
+        ]
       )}
     >
-      {/* Logo */}
-      <Link
-        href={`/${locale}`}
-        className="flex items-center gap-2"
-        onClick={() => setActive(null)}
-      >
-        <ClubLogo width={40} height={40} className="rounded-full" />
-        <span className="font-bold text-lg text-black dark:text-white">
-          {t("clubName")}
-        </span>
-      </Link>
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        {/* Logo */}
+        <Link
+          href={`/${locale}`}
+          className={cn(
+            "flex items-center gap-2 transition-transform duration-300",
+            isScrolled && "scale-90"
+          )}
+          onClick={() => setActive(null)}
+        >
+          <ClubLogo width={isScrolled ? 60 : 80} height={isScrolled ? 60 : 80} className="rounded-full transition-all duration-300" />
+        </Link>
 
-      {/* Navigation Items - Centered */}
-      <div className="flex-1 flex justify-center pt-4">
-        <Menu setActive={setActive}>
+        {/* Navigation Items - Centered */}
+        <div className="flex-1 flex justify-center">
+          <Menu setActive={setActive}>
           {/* Dynamic Navigation Items */}
           {navItems.map((item) => {
             if (item.href && !item.children) {
@@ -52,8 +75,11 @@ const DesktopMenu = () => {
                   key={item.id}
                   href={item.href}
                   className={cn(
-                    "text-black dark:text-white font-medium text-sm",
-                    pathname === item.href && "text-white"
+                    "font-medium text-sm transition-colors duration-200",
+                    isScrolled 
+                      ? "text-gray-800 dark:text-gray-100 hover:text-[#d51a2d] dark:hover:text-[#f2b631]" 
+                      : "text-gray-900 dark:text-white hover:text-[#d51a2d]",
+                    pathname === item.href && "text-[#d51a2d] dark:text-[#f2b631]"
                   )}
                   onClick={() => setActive(null)}
                 >
@@ -107,11 +133,12 @@ const DesktopMenu = () => {
             }
             return null;
           })}
-        </Menu>
-      </div>
+          </Menu>
+        </div>
 
-      {/* Language Switcher */}
-      <TranslateButton />
+        {/* Language Switcher */}
+        <TranslateButton />
+      </div>
     </div>
   );
 };

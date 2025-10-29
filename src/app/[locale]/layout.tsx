@@ -1,4 +1,5 @@
 // Updated src/app/[locale]/layout.tsx
+
 import { Almarai, Inter } from "next/font/google";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";

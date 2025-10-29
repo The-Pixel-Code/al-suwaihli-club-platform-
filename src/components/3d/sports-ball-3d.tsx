@@ -35,6 +35,12 @@ interface SportsBall3DProps {
     | "sunset"
     | "warehouse";
   transitionDuration?: number;
+  /**
+   * When true, only displays one 3D object at a time during transitions.
+   * When false (default), shows overlapping objects during transitions for smoother effect.
+   * Useful for hero sections where you want cleaner, single-object display.
+   */
+  singleObjectMode?: boolean;
 }
 
 export function SportsBall3D({
@@ -48,6 +54,7 @@ export function SportsBall3D({
   enableShadows = true,
   environmentPreset = "city",
   transitionDuration = 600, // Longer transition for smoother effect
+  singleObjectMode = false, // Default to showing transition overlap
 }: SportsBall3DProps) {
   const [currentSport, setCurrentSport] = useState<SportType>(initialSport);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -87,6 +94,18 @@ export function SportsBall3D({
         clearTimeout(transitionTimeoutRef.current);
       }
 
+      // Single Object Mode: Only show one object at a time
+      if (singleObjectMode) {
+        // Immediately switch to the new sport without overlap
+        transitionTimeoutRef.current = setTimeout(() => {
+          setDisplayedSports({ current: currentSport });
+          setIsTransitioning(false);
+        }, transitionDuration);
+        
+        return { current: currentSport };
+      }
+
+      // Standard Mode: Show overlap during transition
       // Set up the transition phases: show the old current while marking the new one as previous
       const newState = {
         current: prev.current,
@@ -118,7 +137,7 @@ export function SportsBall3D({
         clearTimeout(transitionTimeoutRef.current);
       }
     };
-  }, [currentSport, transitionDuration]);
+  }, [currentSport, transitionDuration, singleObjectMode]);
 
   // Get animation properties based on sport type
   const getSportAnimationProps = (sport: SportType) => {
@@ -191,8 +210,8 @@ export function SportsBall3D({
               fadeIn={true}
             />
 
-            {/* Previous Sport Model (during transition) */}
-            {displayedSports.previous && isTransitioning && (
+            {/* Previous Sport Model (during transition) - Only show if not in single object mode */}
+            {!singleObjectMode && displayedSports.previous && isTransitioning && (
               <SportModel
                 key={`previous-${displayedSports.previous}`}
                 sportType={displayedSports.previous}
