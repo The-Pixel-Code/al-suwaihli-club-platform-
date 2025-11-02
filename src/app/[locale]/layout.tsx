@@ -55,7 +55,11 @@ export default async function LocaleLayout({
   // const session = await getServerSession(authOptions);
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <html 
+      lang={locale} 
+      dir={locale === 'ar' ? 'rtl' : 'ltr'}
+      suppressHydrationWarning
+    >
       <body className={`${almarai.variable} ${inter.variable} ${locale === 'ar' ? 'font-almarai' : 'font-inter'} antialiased`}>
         <AppProviders locale={locale} session={null}>
           <ResponsiveNavbar />
