@@ -39,10 +39,10 @@ interface SportBallProps {
 
 /**
  * SportBall - A simple 3D sport ball component
- * 
+ *
  * Displays a single sport ball without transitions.
  * Perfect for hero sections and decorative elements.
- * 
+ *
  * @example
  * ```tsx
  * <SportBall
