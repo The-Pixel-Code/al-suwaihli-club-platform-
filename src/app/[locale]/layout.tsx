@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AppProviders } from "@/components/providers";
 import { ResponsiveNavbar } from "@/components/navigation/responsive-navbar";
 import "./globals.css";
+import Footer from "@/components/sections/footer";
 
 // Importing Google fonts
 const almarai = Almarai({
@@ -45,7 +46,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  
+
   // Ensure that the incoming locale is valid
   if (!hasLocale(routing.locales, locale)) {
     notFound();
@@ -55,15 +56,20 @@ export default async function LocaleLayout({
   // const session = await getServerSession(authOptions);
 
   return (
-    <html 
-      lang={locale} 
-      dir={locale === 'ar' ? 'rtl' : 'ltr'}
+    <html
+      lang={locale}
+      dir={locale === "ar" ? "rtl" : "ltr"}
       suppressHydrationWarning
     >
-      <body className={`${almarai.variable} ${inter.variable} ${locale === 'ar' ? 'font-almarai' : 'font-inter'} antialiased`}>
+      <body
+        className={`${almarai.variable} ${inter.variable} ${
+          locale === "ar" ? "font-almarai" : "font-inter"
+        } antialiased`}
+      >
         <AppProviders locale={locale} session={null}>
           <ResponsiveNavbar />
           {children}
+          <Footer />
           <Toaster />
         </AppProviders>
       </body>
