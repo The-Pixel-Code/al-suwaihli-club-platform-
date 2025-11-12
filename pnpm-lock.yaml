@@ -140,6 +140,9 @@ importers:
       '@upstash/redis':
         specifier: latest
         version: 1.35.6
+      '@vercel/analytics':
+        specifier: ^1.4.0
+        version: 1.4.0(next@15.4.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@vercel/postgres':
         specifier: latest
         version: 0.10.0
@@ -289,7 +292,7 @@ importers:
         version: 4.1.12
     devDependencies:
       '@tailwindcss/postcss':
-        specifier: ^4.1.15
+        specifier: ^4.1.9
         version: 4.1.15
       '@types/bcryptjs':
         specifier: ^3.0.0
@@ -313,7 +316,7 @@ importers:
         specifier: ^0.31.5
         version: 0.31.5
       tailwindcss:
-        specifier: ^4.1.15
+        specifier: ^4.1.9
         version: 4.1.15
       tsx:
         specifier: ^4.20.6
@@ -3037,6 +3040,32 @@ packages:
     resolution: {integrity: sha512-Yy19y6O2GJq8f7CHf7L0nxL8bf4PZCPaVOCgJrusOeFHY1LvHgYXnmnXg6N5iwAnbgbZCDjo60SiM6IPJi9C5g==}
     peerDependencies:
       react: '>= 16.8.0'
+
+  '@vercel/analytics@1.4.0':
+    resolution: {integrity: sha512-eUwWW7l8nPJb0nJmjZuYp9o7YZ9XPj67lU9mEogaPXiFxq/SFB5DMnvQVk4aKcL8kFgotiYdDZWxdiNcWo7cgg==}
+    peerDependencies:
+      '@remix-run/react': ^2
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@vercel/postgres@0.10.0':
     resolution: {integrity: sha512-fSD23DxGND40IzSkXjcFcxr53t3Tiym59Is0jSYIFpG4/0f0KO9SGtcp1sXiebvPaGe7N/tU05cH4yt2S6/IPg==}
@@ -9697,6 +9726,11 @@ snapshots:
   '@use-gesture/react@10.3.1(react@19.1.0)':
     dependencies:
       '@use-gesture/core': 10.3.1
+      react: 19.1.0
+
+  '@vercel/analytics@1.4.0(next@15.4.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
+    optionalDependencies:
+      next: 15.4.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
 
   '@vercel/postgres@0.10.0':
