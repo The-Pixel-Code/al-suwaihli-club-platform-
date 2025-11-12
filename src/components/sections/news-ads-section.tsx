@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import type React from "react";
+import { useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 
@@ -16,8 +17,6 @@ import { PaginationDots } from "@/components/ui/pagination-dots";
 import { LayoutRouter } from "@/components/news/layouts/layout-router";
 import { mockNews } from "@/data/mock-news";
 import useLanguage from "@/hooks/use-language";
-
-// Mock data (this would come from an API or props in a real app)
 
 interface NewsAdsCarouselProps {
   isRtl?: boolean;
@@ -37,11 +36,19 @@ export const NewsAdsCarousel: React.FC<NewsAdsCarouselProps> = ({
   const slides = createCarouselSlides(news);
   const { isArabic: isRtl } = useLanguage();
 
-  // Use carousel hook for state management
-  const { currentSlide, nextSlide, prevSlide, goToSlide } = useCarousel({
+  const {
+    currentSlide,
+    nextSlide,
+    prevSlide,
+    goToSlide,
+    pauseAutoPlay,
+    resumeAutoPlay,
+  } = useCarousel({
     slides,
     autoPlayInterval,
   });
+
+  const liveRegionRef = useRef<HTMLDivElement>(null);
 
   // Handle read more click
   const handleReadMore = (item: NewsItem) => {
@@ -59,6 +66,9 @@ export const NewsAdsCarousel: React.FC<NewsAdsCarouselProps> = ({
         "py-20 bg-gradient-to-bl from-[#FFE5E5] to-[#F5F5FA] via-[#F5F5FA]",
         className
       )}
+      aria-label={
+        isRtl ? "قسم الأخبار والإعلانات" : "News and Announcements Section"
+      }
     >
       <div className="container mx-auto px-4 space-x-8">
         {/* Section Header */}
@@ -75,23 +85,45 @@ export const NewsAdsCarousel: React.FC<NewsAdsCarouselProps> = ({
 
         {/* Carousel Container */}
         <div className="relative">
-          {/* Navigation Buttons */}
           <NavigationButtons
             onPrev={prevSlide}
             onNext={nextSlide}
             isRtl={isRtl}
+            currentSlide={currentSlide + 1}
+            totalSlides={slides.length}
             className={"w-full"}
           />
 
-          {/* Slides Container */}
-          <div className="overflow-hidden rounded-3xl">
+          <div
+            ref={liveRegionRef}
+            className="sr-only"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {isRtl
+              ? `الشريحة ${currentSlide + 1} من ${slides.length}`
+              : `Slide ${currentSlide + 1} of ${slides.length}`}
+          </div>
+
+          <div
+            className="overflow-hidden rounded-3xl"
+            role="region"
+            aria-label={isRtl ? "عرض الأخبار" : "News carousel"}
+            onMouseEnter={pauseAutoPlay}
+            onMouseLeave={resumeAutoPlay}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
-                initial={{ opacity: 0, x: isRtl ? -50 : 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: isRtl ? 50 : -50 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
+                initial={{ opacity: 0, x: isRtl ? -30 : 30, scale: 0.98 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: isRtl ? 30 : -30, scale: 0.98 }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.4, 0, 0.2, 1],
+                  opacity: { duration: 0.4 },
+                }}
                 className="p-8"
               >
                 <LayoutRouter
@@ -104,11 +136,11 @@ export const NewsAdsCarousel: React.FC<NewsAdsCarouselProps> = ({
           </div>
         </div>
 
-        {/* Pagination Dots */}
         <PaginationDots
           total={slides.length}
           current={currentSlide}
           onChange={goToSlide}
+          isRtl={isRtl}
         />
       </div>
     </section>
