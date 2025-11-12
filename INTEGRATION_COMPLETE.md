@@ -46,20 +46,20 @@ All components have been successfully integrated with proper **next-intl** trans
 ### Updated: `src/app/[locale]/page.tsx`
 
 **New Imports:**
-```typescript
+\`\`\`typescript
 import { useTranslations } from "next-intl";
 import { LeagueTable, TeamStanding } from "@/components/sections/league-table";
 import { UpcomingMatches, UpcomingMatch } from "@/components/sections/upcoming-matches";
 import { TrophiesShowcase, Trophy } from "@/components/sections/trophies-showcase";
 import Footer from "@/components/sections/footer";
-```
+\`\`\`
 
 **Translation Hooks:**
-```typescript
+\`\`\`typescript
 const tLeague = useTranslations("LeagueTable");
 const tMatches = useTranslations("UpcomingMatches");
 const tTrophies = useTranslations("Trophies");
-```
+\`\`\`
 
 **Components Added:**
 1. **LeagueTable** - Shows league standings with Al-Suwaihli highlighted
@@ -92,7 +92,7 @@ const tTrophies = useTranslations("Trophies");
 
 ## 🎨 Layout Structure
 
-```
+\`\`\`
 HomePage
 ├── HeroSection
 ├── NewsAdsCarousel
@@ -100,7 +100,7 @@ HomePage
 ├── UpcomingMatches Section (gray background #F5F5F5)
 ├── TrophiesShowcase Section (white background)
 └── Footer (dark background #333333)
-```
+\`\`\`
 
 ---
 
@@ -108,7 +108,7 @@ HomePage
 
 ### messages/ar.json & messages/en.json
 
-```json
+\`\`\`json
 {
   "Navigation": { ... },
   "Hero": { ... },
@@ -137,7 +137,7 @@ HomePage
     "categories": { ... }
   }
 }
-```
+\`\`\`
 
 ---
 

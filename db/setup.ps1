@@ -22,4 +22,3 @@ Write-Host "Applying seed.sql"
 psql "host=$Host port=$Port user=$User dbname=$DbName" -v ON_ERROR_STOP=1 -f "$(Resolve-Path ./db/seed.sql)"
 
 Write-Host "Done."
-

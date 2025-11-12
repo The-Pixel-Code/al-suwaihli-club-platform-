@@ -267,4 +267,3 @@ Table star {
   awarded_at date
   competition_id uuid [ref: > competition.id]
 }
-

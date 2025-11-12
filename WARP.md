@@ -9,7 +9,7 @@ Al-Suwaihli Club Platform - A bilingual (Arabic/English) Next.js 15 application 
 ## Development Commands
 
 ### Initial Setup
-```bash
+\`\`\`bash
 # Install dependencies
 bun install
 
@@ -24,10 +24,10 @@ bun run db:seed
 
 # Start development server
 bun dev
-```
+\`\`\`
 
 ### Database Management
-```bash
+\`\`\`bash
 # Generate migrations
 bun run db:generate
 
@@ -45,10 +45,10 @@ bun run db:reset
 
 # Stop database
 bun run docker:down
-```
+\`\`\`
 
 ### Development Workflow
-```bash
+\`\`\`bash
 # Run development server (http://localhost:3000)
 bun dev
 
@@ -60,7 +60,7 @@ bun start
 
 # Run linting
 bun lint
-```
+\`\`\`
 
 ## Architecture Overview
 
@@ -76,7 +76,7 @@ bun lint
 - **Package Manager**: Bun (fallback to npm)
 
 ### Project Structure
-```
+\`\`\`
 src/
 ├── app/
 │   ├── api/                 # API routes
@@ -99,7 +99,7 @@ src/
 │   └── rbac/               # Role-based access control
 ├── middleware.ts           # Next.js middleware (auth + i18n)
 └── routes.ts              # Route definitions and permissions
-```
+\`\`\`
 
 ### Key Architectural Patterns
 
@@ -153,13 +153,13 @@ src/
 3. Apply migration: `bun run db:migrate`
 
 ### Working with Translations
-```typescript
+\`\`\`typescript
 // In components
 import { useTranslations } from 'next-intl';
 
 const t = useTranslations('PageName');
 // Use: t('key')
-```
+\`\`\`
 
 ### Role-Based Route Protection
 Routes are automatically protected based on patterns defined in `src/routes.ts`:
@@ -183,11 +183,11 @@ pgAdmin available at: http://localhost:5050
 ## Environment Variables
 
 Required in `.env.local`:
-```bash
+\`\`\`bash
 DATABASE_URL=postgresql://club_admin:secure_password_123@localhost:5432/al_suwaihli_club
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=[generate-with-openssl]
-```
+\`\`\`
 
 ## Common Development Tasks
 

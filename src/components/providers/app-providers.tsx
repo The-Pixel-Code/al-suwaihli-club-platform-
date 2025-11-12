@@ -1,5 +1,3 @@
-
-
 // src/components/providers/app-providers.tsx
 import { QueryProvider } from "./query-provider";
 import { IntlProvider } from "./intl-provider";

@@ -14,7 +14,7 @@ Quick start (Windows, PowerShell):
 3) Copy `postgrest.example.conf` to `postgrest.conf` and fill placeholders.
 4) Run setup:
 
-```powershell
+\`\`\`powershell
 # Set your variables
 $env:PGUSER = "your_pg_user"
 $env:PGPASSWORD = "your_pg_password"
@@ -24,15 +24,15 @@ $env:PGPORT = "5432"
 
 # Initialize
 pwsh -File ./db/setup.ps1
-```
+\`\`\`
 
 Running PostgREST:
 - Install from https://postgrest.org
 - Then run:
 
-```powershell
+\`\`\`powershell
 postgrest ./db/postgrest.example.conf
-```
+\`\`\`
 
 JWT claims expected by RLS policies:
 - role: 'admin' | 'editor' | 'viewer'
@@ -41,4 +41,3 @@ JWT claims expected by RLS policies:
 Notes:
 - Public (anonymous) requests can read published advertisements and general public tables; writes are restricted.
 - Adjust RLS to your needs if you want wider public access.
-

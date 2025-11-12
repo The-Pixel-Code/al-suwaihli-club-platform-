@@ -491,4 +491,3 @@ TO anon;
 -- Read/write privileges for application user role (actual access restricted by RLS)
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA app TO webuser;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA app TO webuser;
-

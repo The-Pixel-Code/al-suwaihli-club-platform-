@@ -80,4 +80,3 @@ SELECT fb.sport_id, comp.competition_id, home_t.home_team_id, away_t.away_team_i
 FROM comp, fb, home_t, away_t
 WHERE home_t.home_team_id IS NOT NULL AND away_t.away_team_id IS NOT NULL
 ON CONFLICT DO NOTHING;
-

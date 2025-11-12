@@ -75,30 +75,30 @@
    - Or use Blender (free) to convert
 
 ### Step 2: Optimize Models for Web
-```bash
+\`\`\`bash
 # Install gltf-pipeline globally
 npm install -g gltf-pipeline
 
 # Compress your model
 gltf-pipeline -i input.glb -o output.glb --draco.compressionLevel=10
-```
+\`\`\`
 
 ### Step 3: Add Models to Your Project
 1. Create folder: `public/models/`
 2. Place your `.glb` files:
-   ```
+   \`\`\`
    public/
    └── models/
        ├── football.glb
        ├── basketball.glb
        ├── table-tennis.glb
        └── chess-knight.glb
-   ```
+   \`\`\`
 
 ### Step 4: Update Component
 Update the `sports-showcase-gltf.tsx` file with your model paths:
 
-```typescript
+\`\`\`typescript
 const models = [
   { 
     name: 'Football', 
@@ -107,7 +107,7 @@ const models = [
   },
   // ... other models
 ];
-```
+\`\`\`
 
 ## 🎨 Recommended Specific Models
 
@@ -131,7 +131,7 @@ const models = [
 
 For immediate testing, you can use these CDN-hosted models:
 
-```typescript
+\`\`\`typescript
 const models = [
   { 
     name: 'Football', 
@@ -143,7 +143,7 @@ const models = [
   },
   // Add more from Three.js examples
 ];
-```
+\`\`\`
 
 ## 💡 Tips for Best Results
 

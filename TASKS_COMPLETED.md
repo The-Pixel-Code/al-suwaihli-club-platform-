@@ -17,7 +17,7 @@ All 5 tasks for the Al-Suwaihli Club platform have been successfully completed. 
 - Accessibility support (respects prefers-reduced-motion)
 
 ### Usage:
-```tsx
+\`\`\`tsx
 // Default - both background and floating dots
 <AnimatedSportsBackground />
 
@@ -29,7 +29,7 @@ All 5 tasks for the Al-Suwaihli Club platform have been successfully completed. 
 
 // Only halftone pattern
 <AnimatedSportsBackground showDarkBackground={false} showFloatingDots={false} />
-```
+\`\`\`
 
 ---
 
@@ -48,7 +48,7 @@ All 5 tasks for the Al-Suwaihli Club platform have been successfully completed. 
 - Legend for position meanings
 
 ### Usage:
-```tsx
+\`\`\`tsx
 import { LeagueTable, TeamStanding } from "@/components/sections/league-table"
 
 const standings: TeamStanding[] = [
@@ -76,7 +76,7 @@ const standings: TeamStanding[] = [
   season="2024/2025"
   lastUpdated="2025-11-10"
 />
-```
+\`\`\`
 
 ---
 
@@ -96,7 +96,7 @@ const standings: TeamStanding[] = [
 - Empty state handling
 
 ### Usage:
-```tsx
+\`\`\`tsx
 import { UpcomingMatches, UpcomingMatch } from "@/components/sections/upcoming-matches"
 
 const matches: UpcomingMatch[] = [
@@ -127,7 +127,7 @@ const matches: UpcomingMatch[] = [
   title="المباريات القادمة"
   showCompetitionBadge={true}
 />
-```
+\`\`\`
 
 ---
 
@@ -147,7 +147,7 @@ const matches: UpcomingMatch[] = [
 - RTL support
 
 ### Usage:
-```tsx
+\`\`\`tsx
 import { TrophiesShowcase, Trophy } from "@/components/sections/trophies-showcase"
 
 const trophies: Trophy[] = [
@@ -188,7 +188,7 @@ const trophies: Trophy[] = [
   viewMode="timeline"
   title="إنجازات وبطولات النادي"
 />
-```
+\`\`\`
 
 ---
 
@@ -211,13 +211,13 @@ const trophies: Trophy[] = [
 - Developer credit
 
 ### Usage:
-```tsx
+\`\`\`tsx
 import { Footer } from "@/components/sections/footer"
 
 // Simple usage - no props needed
 // Uses useLanguage hook for automatic RTL/LTR support
 <Footer />
-```
+\`\`\`
 
 **Features Include:**
 - **Column 1:** Club info + Newsletter subscription
@@ -258,20 +258,20 @@ All components use the consistent Al-Suwaihli Club color palette:
 
 These components require the following dependencies (likely already in your project):
 
-```json
+\`\`\`json
 {
   "framer-motion": "^10.x.x",
   "lucide-react": "^0.x.x",
   "next": "^14.x.x",
   "react": "^18.x.x"
 }
-```
+\`\`\`
 
 ---
 
 ## File Structure
 
-```
+\`\`\`
 src/
 ├── components/
 │   ├── sections/
@@ -285,7 +285,7 @@ src/
 │       └── card.tsx
 └── hooks/
     └── use-language.ts
-```
+\`\`\`
 
 ---
 

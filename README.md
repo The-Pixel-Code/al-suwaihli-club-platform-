@@ -101,7 +101,7 @@ The platform implements a hierarchical permission system:
 
 ## 📁 Project Structure
 
-```
+\`\`\`
 ├── messages/              # Internationalization messages
 │   ├── ar.json           # Arabic translations
 │   └── en.json           # English translations
@@ -119,7 +119,7 @@ The platform implements a hierarchical permission system:
 │   ├── lib/              # Utility functions
 │   ├── middleware.ts     # Next.js middleware for i18n
 │   └── routes.ts         # Route definitions and permissions
-```
+\`\`\`
 
 ## 🚀 Getting Started
 
@@ -131,37 +131,37 @@ The platform implements a hierarchical permission system:
 ### **Installation**
 
 1. **Clone the repository**
-   ```bash
+   \`\`\`bash
    git clone <repository-url>
    cd al-suwaihli-club-platform
-   ```
+   \`\`\`
 
 2. **Install dependencies**
-   ```bash
+   \`\`\`bash
    bun install
    # or
    npm install
-   ```
+   \`\`\`
 
 3. **Environment setup**
-   ```bash
+   \`\`\`bash
    cp .env.example .env.local
    # Edit .env.local with your database credentials and settings
-   ```
+   \`\`\`
 
 4. **Database setup**
-   ```bash
+   \`\`\`bash
    bun run db:push
    # or
    npm run db:push
-   ```
+   \`\`\`
 
 5. **Start development server**
-   ```bash
+   \`\`\`bash
    bun dev
    # or
    npm run dev
-   ```
+   \`\`\`
 
 6. **Open the application**
    Navigate to [http://localhost:3000](http://localhost:3000)
