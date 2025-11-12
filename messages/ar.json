@@ -61,5 +61,72 @@
         "data_saved": "لقد تم حفظ بياناتك بنجاح.",
         "profile_updated": "لقد تم تحديث ملفك الشخصي."
     },
-    "loading": "جاري التحميل، الرجاء الانتظار..."
+    "loading": "جاري التحميل، الرجاء الانتظار...",
+    "Footer": {
+        "clubName": "نادي السويحلي",
+        "clubDescription": "نادي السويحلي الرياضي - نادي رياضي ليبي عريق يضم العديد من الألعاب الرياضية ويسعى دائماً للتميز والإنجازات",
+        "quickLinks": "روابط سريعة",
+        "contactUs": "تواصل معنا",
+        "followUs": "تابعنا",
+        "newsletter": "اشترك في النشرة الإخبارية",
+        "emailPlaceholder": "بريدك الإلكتروني",
+        "subscribe": "اشترك",
+        "subscribeSuccess": "تم الاشتراك بنجاح!",
+        "phone": "+218 91 234 5678",
+        "email": "info@alsuwaihli.ly",
+        "location": "مصراتة، ليبيا",
+        "copyright": "© 2025 نادي السويحلي الرياضي. جميع الحقوق محفوظة.",
+        "privacyPolicy": "سياسة الخصوصية",
+        "termsConditions": "الشروط والأحكام",
+        "socialMedia": {
+            "facebook": "تابعنا على فيسبوك",
+            "twitter": "تابعنا على تويتر",
+            "instagram": "تابعنا على انستغرام",
+            "youtube": "تابعنا على يوتيوب"
+        }
+    },
+    "LeagueTable": {
+        "title": "جدول ترتيب الدوري",
+        "season": "الموسم",
+        "lastUpdated": "آخر تحديث",
+        "position": "المركز",
+        "team": "الفريق",
+        "played": "لعب",
+        "won": "فاز",
+        "drawn": "تعادل",
+        "lost": "خسر",
+        "goalsFor": "له",
+        "goalsAgainst": "عليه",
+        "goalDifference": "الفارق",
+        "points": "النقاط",
+        "form": "الأداء",
+        "win": "فوز",
+        "draw": "تعادل",
+        "loss": "خسارة",
+        "legend": {
+            "top3": "المراكز الثلاثة الأولى",
+            "european": "المراكز الأوروبية",
+            "relegation": "مراكز الهبوط"
+        }
+    },
+    "UpcomingMatches": {
+        "title": "المباريات القادمة",
+        "vs": "ضد",
+        "homeMatch": "مباراة على أرضنا",
+        "bookTicket": "احجز تذكرتك",
+        "noMatches": "لا توجد مباريات قادمة حالياً",
+        "followUpdates": "تابع الموقع للحصول على آخر التحديثات"
+    },
+    "Trophies": {
+        "title": "إنجازات وبطولات النادي",
+        "subtitle": "رحلة حافلة بالإنجازات والنجاحات",
+        "totalTrophies": "بطولة وجائزة",
+        "years": "السنوات",
+        "categories": {
+            "league": "بطولة الدوري",
+            "cup": "بطولة الكأس",
+            "international": "بطولة دولية",
+            "other": "بطولة أخرى"
+        }
+    }
 }

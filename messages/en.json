@@ -60,5 +60,72 @@
         "data_saved": "Your data has been saved successfully.",
         "profile_updated": "Your profile has been updated."
     },
-    "loading": "Loading, please wait..."
+    "loading": "Loading, please wait...",
+    "Footer": {
+        "clubName": "Al-Suwaihli Club",
+        "clubDescription": "Al-Suwaihli Sports Club - A prestigious Libyan sports club with multiple sports and a commitment to excellence",
+        "quickLinks": "Quick Links",
+        "contactUs": "Contact Us",
+        "followUs": "Follow Us",
+        "newsletter": "Subscribe to Newsletter",
+        "emailPlaceholder": "Your email",
+        "subscribe": "Subscribe",
+        "subscribeSuccess": "Successfully subscribed!",
+        "phone": "+218 91 234 5678",
+        "email": "info@alsuwaihli.ly",
+        "location": "Misrata, Libya",
+        "copyright": "© 2025 Al-Suwaihli Sports Club. All rights reserved.",
+        "privacyPolicy": "Privacy Policy",
+        "termsConditions": "Terms & Conditions",
+        "socialMedia": {
+            "facebook": "Follow us on Facebook",
+            "twitter": "Follow us on Twitter",
+            "instagram": "Follow us on Instagram",
+            "youtube": "Follow us on Youtube"
+        }
+    },
+    "LeagueTable": {
+        "title": "League Standings",
+        "season": "Season",
+        "lastUpdated": "Last Updated",
+        "position": "Position",
+        "team": "Team",
+        "played": "Played",
+        "won": "Won",
+        "drawn": "Drawn",
+        "lost": "Lost",
+        "goalsFor": "GF",
+        "goalsAgainst": "GA",
+        "goalDifference": "GD",
+        "points": "Points",
+        "form": "Form",
+        "win": "Win",
+        "draw": "Draw",
+        "loss": "Loss",
+        "legend": {
+            "top3": "Top 3 Positions",
+            "european": "European Spots",
+            "relegation": "Relegation Zone"
+        }
+    },
+    "UpcomingMatches": {
+        "title": "Upcoming Matches",
+        "vs": "vs",
+        "homeMatch": "Home Match",
+        "bookTicket": "Book Your Ticket",
+        "noMatches": "No upcoming matches currently",
+        "followUpdates": "Follow the site for latest updates"
+    },
+    "Trophies": {
+        "title": "Club Achievements & Championships",
+        "subtitle": "A journey filled with achievements and successes",
+        "totalTrophies": "Championships and Awards",
+        "years": "Years",
+        "categories": {
+            "league": "League Championship",
+            "cup": "Cup Championship",
+            "international": "International Championship",
+            "other": "Other Championship"
+        }
+    }
 }
