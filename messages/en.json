@@ -1,131 +1,134 @@
-{   "Metadata" : {
-        "title": "Suwaihli Club - Misrata",
-        "description": "The official site of Suwaihli Sports, Cultural, and Social Club in Misrata."
+{
+  "Metadata": {
+    "title": "Suwaihli Club - Misrata",
+    "description": "The official site of Suwaihli Sports, Cultural, and Social Club in Misrata."
+  },
+  "Navigation": {
+    "clubName": "Al-Suwaihli Club",
+    "established": "Established",
+    "home": "Home",
+    "club": "Club",
+    "clubHistory": "Club History",
+    "clubHistoryDesc": "All the club's historical details",
+    "championships": "Championships",
+    "championshipsDesc": "All championships won in various sports",
+    "clubMagazine": "Club Magazine",
+    "clubMagazineDesc": "The club's electronic magazine",
+    "cityOfMisrata": "City of Misrata",
+    "cityOfMisrataDesc": "An introductory overview of the city",
+    "clubLegends": "Club Legends",
+    "clubLegendsDesc": "Biographies of prominent players who shaped the club's history",
+    "academy": "Academy",
+    "academyDesc": "Youth development and academy programs",
+    "sportsActivities": "Sports Activities",
+    "footballWithAgeGroups": "Football",
+    "footballWithAgeGroupsDesc": "Football teams with different age groups",
+    "handballWithAgeGroups": "Handball",
+    "handballWithAgeGroupsDesc": "Handball teams with age groups",
+    "volleyballWithAgeGroups": "Volleyball",
+    "volleyballWithAgeGroupsDesc": "Volleyball teams with age groups",
+    "futsal": "Futsal",
+    "futsalDesc": "Futsal team activities",
+    "otherSports": "Other Sports",
+    "otherSportsDesc": "The rest of the club's sports activities",
+    "leagueSchedule": "League Schedule",
+    "clubRadio": "Club Radio",
+    "news": "News"
+  },
+  "Hero": {
+    "badge": "Al-Suwaihli Sports, Cultural & Social Club",
+    "title": {
+      "part1": "Al-Suwaihli Club",
+      "part2": "Since 1951"
     },
-    "Navigation": {
-        "clubName": "Al-Suwaihli Club",
-        "established": "Established",
-        "home": "Home",
-        "club": "Club",
-        "clubHistory": "Club History",
-        "clubHistoryDesc": "All the club's historical details",
-        "championships": "Championships",
-        "championshipsDesc": "All championships won in various sports",
-        "clubMagazine": "Club Magazine",
-        "clubMagazineDesc": "The club's electronic magazine",
-        "cityOfMisrata": "City of Misrata",
-        "cityOfMisrataDesc": "An introductory overview of the city",
-        "clubLegends": "Club Legends",
-        "clubLegendsDesc": "Biographies of prominent players who shaped the club's history",
-        "sportsActivities": "Sports Activities",
-        "footballWithAgeGroups": "Football",
-        "footballWithAgeGroupsDesc": "Football teams with different age groups",
-        "handballWithAgeGroups": "Handball",
-        "handballWithAgeGroupsDesc": "Handball teams with age groups",
-        "volleyballWithAgeGroups": "Volleyball",
-        "volleyballWithAgeGroupsDesc": "Volleyball teams with age groups",
-        "futsal": "Futsal",
-        "futsalDesc": "Futsal team activities",
-        "otherSports": "Other Sports",
-        "otherSportsDesc": "The rest of the club's sports activities",
-        "leagueSchedule": "League Schedule",
-        "clubRadio": "Club Radio",
-        "news": "News"
+    "subtitle": "A prestigious club combining sports, culture, and social activities, serving the Misrata community for over 70 years",
+    "stats": {
+      "trophies": "Championships",
+      "members": "Members",
+      "founded": "Founded"
     },
-    "Hero": {
-        "badge": "Al-Suwaihli Sports, Cultural & Social Club",
-        "title": {
-            "part1": "Al-Suwaihli Club",
-            "part2": "Since 1951"
-        },
-        "subtitle": "A prestigious club combining sports, culture, and social activities, serving the Misrata community for over 70 years",
-        "stats": {
-            "trophies": "Championships",
-            "members": "Members",
-            "founded": "Founded"
-        },
-        "cta": {
-            "join": "Join Us",
-            "learn": "Learn More"
-        }
-    },
-    "welcome": "Welcome to our application!",
-    "login": "Please log in to continue.",
-    "logout": "You have successfully logged out.",
-    "error": {
-        "not_found": "The requested resource was not found.",
-        "server_error": "An unexpected error occurred. Please try again later."
-    },
-    "success": {
-        "data_saved": "Your data has been saved successfully.",
-        "profile_updated": "Your profile has been updated."
-    },
-    "loading": "Loading, please wait...",
-    "Footer": {
-        "clubName": "Al-Suwaihli Club",
-        "clubDescription": "Al-Suwaihli Sports Club - A prestigious Libyan sports club with multiple sports and a commitment to excellence",
-        "quickLinks": "Quick Links",
-        "contactUs": "Contact Us",
-        "followUs": "Follow Us",
-        "newsletter": "Subscribe to Newsletter",
-        "emailPlaceholder": "Your email",
-        "subscribe": "Subscribe",
-        "subscribeSuccess": "Successfully subscribed!",
-        "phone": "+218 91 234 5678",
-        "email": "info@alsuwaihli.ly",
-        "location": "Misrata, Libya",
-        "copyright": "© 2025 Al-Suwaihli Sports Club. All rights reserved.",
-        "privacyPolicy": "Privacy Policy",
-        "termsConditions": "Terms & Conditions",
-        "socialMedia": {
-            "facebook": "Follow us on Facebook",
-            "twitter": "Follow us on Twitter",
-            "instagram": "Follow us on Instagram",
-            "youtube": "Follow us on Youtube"
-        }
-    },
-    "LeagueTable": {
-        "title": "League Standings",
-        "season": "Season",
-        "lastUpdated": "Last Updated",
-        "position": "Position",
-        "team": "Team",
-        "played": "Played",
-        "won": "Won",
-        "drawn": "Drawn",
-        "lost": "Lost",
-        "goalsFor": "GF",
-        "goalsAgainst": "GA",
-        "goalDifference": "GD",
-        "points": "Points",
-        "form": "Form",
-        "win": "Win",
-        "draw": "Draw",
-        "loss": "Loss",
-        "legend": {
-            "top3": "Top 3 Positions",
-            "european": "European Spots",
-            "relegation": "Relegation Zone"
-        }
-    },
-    "UpcomingMatches": {
-        "title": "Upcoming Matches",
-        "vs": "vs",
-        "homeMatch": "Home Match",
-        "bookTicket": "Book Your Ticket",
-        "noMatches": "No upcoming matches currently",
-        "followUpdates": "Follow the site for latest updates"
-    },
-    "Trophies": {
-        "title": "Club Achievements & Championships",
-        "subtitle": "A journey filled with achievements and successes",
-        "totalTrophies": "Championships and Awards",
-        "years": "Years",
-        "categories": {
-            "league": "League Championship",
-            "cup": "Cup Championship",
-            "international": "International Championship",
-            "other": "Other Championship"
-        }
+    "cta": {
+      "join": "Join Us",
+      "learn": "Learn More"
     }
+  },
+  "welcome": "Welcome to our application!",
+  "login": "Please log in to continue.",
+  "logout": "You have successfully logged out.",
+  "error": {
+    "not_found": "The requested resource was not found.",
+    "server_error": "An unexpected error occurred. Please try again later."
+  },
+  "success": {
+    "data_saved": "Your data has been saved successfully.",
+    "profile_updated": "Your profile has been updated."
+  },
+  "loading": "Loading, please wait...",
+  "Footer": {
+    "clubName": "Al-Suwaihli Club",
+    "clubDescription": "Al-Suwaihli Sports Club - A prestigious Libyan sports club with multiple sports and a commitment to excellence",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "followUs": "Follow Us",
+    "newsletter": "Subscribe to Newsletter",
+    "emailPlaceholder": "Your email",
+    "subscribe": "Subscribe",
+    "subscribeSuccess": "Successfully subscribed!",
+    "phone": "+218 91 234 5678",
+    "email": "info@alsuwaihli.ly",
+    "location": "Misrata, Libya",
+    "copyright": "© 2025 Al-Suwaihli Sports Club. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions",
+    "socialMedia": {
+      "facebook": "Follow us on Facebook",
+      "twitter": "Follow us on Twitter",
+      "instagram": "Follow us on Instagram",
+      "youtube": "Follow us on Youtube"
+    }
+  },
+  "LeagueTable": {
+    "title": "League Standings",
+    "season": "Season",
+    "lastUpdated": "Last Updated",
+    "position": "Position",
+    "team": "Team",
+    "played": "Played",
+    "won": "Won",
+    "drawn": "Drawn",
+    "lost": "Lost",
+    "goalsFor": "GF",
+    "goalsAgainst": "GA",
+    "goalDifference": "GD",
+    "points": "Points",
+    "form": "Form",
+    "win": "Win",
+    "draw": "Draw",
+    "loss": "Loss",
+    "legend": {
+      "top3": "Top 3 Positions",
+      "european": "European Spots",
+      "relegation": "Relegation Zone"
+    }
+  },
+  "UpcomingMatches": {
+    "title": "Upcoming Matches",
+    "vs": "vs",
+    "homeMatch": "Home Match",
+    "bookTicket": "Book Your Ticket",
+    "noMatches": "No upcoming matches currently",
+    "followUpdates": "Follow the site for latest updates"
+  },
+  "Trophies": {
+    "title": "Club Achievements & Championships",
+    "subtitle": "A journey filled with achievements and successes",
+    "totalTrophies": "Championships and Awards",
+    "years": "Years",
+    "categories": {
+      "league": "League Championship",
+      "cup": "Cup Championship",
+      "international": "International Championship",
+      "other": "Other Championship"
+    }
+  }
 }

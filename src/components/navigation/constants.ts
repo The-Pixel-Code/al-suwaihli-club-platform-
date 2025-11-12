@@ -1,9 +1,6 @@
-import { NavItem } from "./types";
+import type { NavItem } from "./types"
 
-export const getNavItems = (
-  t: (key: string) => string,
-  locale: string
-): NavItem[] => [
+export const getNavItems = (t: (key: string) => string, locale: string): NavItem[] => [
   {
     id: "home",
     label: t("home"),
@@ -39,6 +36,11 @@ export const getNavItems = (
         description: t("clubLegendsDesc"),
       },
     ],
+  },
+  {
+    id: "academy",
+    label: t("academy"),
+    href: `/${locale}/academy`,
   },
   {
     id: "sports",
@@ -81,4 +83,4 @@ export const getNavItems = (
     label: t("clubRadio"),
     href: `/${locale}/club-radio`,
   },
-];
+]
