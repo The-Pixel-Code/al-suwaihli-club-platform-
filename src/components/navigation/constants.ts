@@ -72,6 +72,11 @@ export const getNavItems = (
     ],
   },
   {
+    id: "academy",
+    label: t("academy"),
+    href: `/${locale}/academy`,
+  },
+  {
     id: "schedule",
     label: t("leagueSchedule"),
     href: `/${locale}/league-schedule`,

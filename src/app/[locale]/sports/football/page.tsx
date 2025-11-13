@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useLanguage } from "@/components/language-provider"
+import useLanguage from "@/hooks/use-language"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
@@ -11,7 +11,7 @@ import { motion } from "framer-motion"
 import { PlayerCarousel } from "@/components/player-carousel"
 
 export default function FootballPage() {
-  const { t, language } = useLanguage()
+  const { isArabic } = useLanguage()
   const [selectedTeam, setSelectedTeam] = useState<"first" | "awasit" | "amal" | "baraem">("first")
   const [selectedNewsCategory, setSelectedNewsCategory] = useState<"first" | "awasit" | "amal" | "baraem">("first")
 
@@ -19,501 +19,307 @@ export default function FootballPage() {
   const liveMatches = [
     {
       id: 1,
-      homeTeam: "السويحلي",
-      awayTeam: "الأهلي طرابلس",
+      homeTeam: isArabic ? "السويحلي" : "Al-Suwaihli",
+      awayTeam: isArabic ? "الأهلي طرابلس" : "Al-Ahly Tripoli",
       homeScore: 2,
       awayScore: 1,
       status: "live",
       minute: 67,
-      competition: "الدوري الليبي الممتاز",
+      competition: isArabic ? "الدوري الليبي الممتاز" : "Libyan Premier League",
     },
     {
       id: 2,
-      homeTeam: "الاتحاد",
-      awayTeam: "السويحلي",
+      homeTeam: isArabic ? "الاتحاد" : "Al-Ittihad",
+      awayTeam: isArabic ? "السويحلي" : "Al-Suwaihli",
       homeScore: 0,
       awayScore: 0,
       status: "upcoming",
       date: "2025-11-01",
       time: "18:00",
-      competition: "كأس ليبيا",
+      competition: isArabic ? "كأس ليبيا" : "Libya Cup",
     },
   ]
 
   // Mock data for league standings
   const standings = [
-    { position: 1, team: "الأهلي بنغازي", played: 15, won: 11, drawn: 3, lost: 1, gf: 32, ga: 10, gd: 22, points: 36 },
-    { position: 2, team: "السويحلي", played: 15, won: 10, drawn: 4, lost: 1, gf: 28, ga: 12, gd: 16, points: 34 },
-    { position: 3, team: "الأهلي طرابلس", played: 15, won: 9, drawn: 3, lost: 3, gf: 25, ga: 15, gd: 10, points: 30 },
-    { position: 4, team: "الاتحاد", played: 15, won: 8, drawn: 4, lost: 3, gf: 22, ga: 14, gd: 8, points: 28 },
-    { position: 5, team: "الهلال", played: 15, won: 7, drawn: 5, lost: 3, gf: 20, ga: 16, gd: 4, points: 26 },
+    {
+      position: 1,
+      team: isArabic ? "الأهلي بنغازي" : "Al-Ahly Benghazi",
+      played: 15,
+      won: 11,
+      drawn: 3,
+      lost: 1,
+      gf: 32,
+      ga: 10,
+      gd: 22,
+      points: 36,
+    },
+    {
+      position: 2,
+      team: isArabic ? "السويحلي" : "Al-Suwaihli",
+      played: 15,
+      won: 10,
+      drawn: 4,
+      lost: 1,
+      gf: 28,
+      ga: 12,
+      gd: 16,
+      points: 34,
+    },
+    {
+      position: 3,
+      team: isArabic ? "الأهلي طرابلس" : "Al-Ahly Tripoli",
+      played: 15,
+      won: 9,
+      drawn: 3,
+      lost: 3,
+      gf: 25,
+      ga: 15,
+      gd: 10,
+      points: 30,
+    },
+    {
+      position: 4,
+      team: isArabic ? "الاتحاد" : "Al-Ittihad",
+      played: 15,
+      won: 8,
+      drawn: 4,
+      lost: 3,
+      gf: 22,
+      ga: 14,
+      gd: 8,
+      points: 28,
+    },
+    {
+      position: 5,
+      team: isArabic ? "الهلال" : "Al-Hilal",
+      played: 15,
+      won: 7,
+      drawn: 5,
+      lost: 3,
+      gf: 20,
+      ga: 16,
+      gd: 4,
+      points: 26,
+    },
   ]
 
   // Mock data for squad
-  const squad = {
+  const getSquad = () => ({
     first: [
       {
         id: 1,
-        name: "محمد الصغير",
-        position: "حارس مرمى",
+        name: isArabic ? "محمد الصغير" : "Mohamed Al-Saghir",
+        position: isArabic ? "حارس مرمى" : "Goalkeeper",
         number: 1,
         age: 28,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player1/280/320",
       },
       {
         id: 2,
-        name: "أحمد السويحلي",
-        position: "مدافع",
+        name: isArabic ? "أحمد السويحلي" : "Ahmed Al-Suwaihli",
+        position: isArabic ? "مدافع" : "Defender",
         number: 4,
         age: 26,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player2/280/320",
       },
       {
         id: 3,
-        name: "عمر الزروق",
-        position: "مدافع",
+        name: isArabic ? "عمر الزروق" : "Omar Al-Zarouq",
+        position: isArabic ? "مدافع" : "Defender",
         number: 5,
         age: 29,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player3/280/320",
       },
       {
         id: 4,
-        name: "سالم المبروك",
-        position: "وسط",
+        name: isArabic ? "سالم المبروك" : "Salem Al-Mabrouk",
+        position: isArabic ? "وسط" : "Midfielder",
         number: 8,
         age: 25,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player4/280/320",
       },
       {
         id: 5,
-        name: "خالد الترهوني",
-        position: "وسط",
+        name: isArabic ? "خالد الترهوني" : "Khaled Al-Tarhouni",
+        position: isArabic ? "وسط" : "Midfielder",
         number: 10,
         age: 27,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player5/280/320",
       },
       {
         id: 6,
-        name: "يوسف البشير",
-        position: "مهاجم",
+        name: isArabic ? "يوسف البشير" : "Youssef Al-Bashir",
+        position: isArabic ? "مهاجم" : "Forward",
         number: 9,
         age: 24,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player6/280/320",
-      },
-      {
-        id: 7,
-        name: "عبدالرحمن القذافي",
-        position: "حارس مرمى",
-        number: 12,
-        age: 30,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player7/280/320",
-      },
-      {
-        id: 8,
-        name: "فرج الأسود",
-        position: "مدافع",
-        number: 2,
-        age: 27,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player8/280/320",
-      },
-      {
-        id: 9,
-        name: "منصور الكيلاني",
-        position: "مدافع",
-        number: 3,
-        age: 25,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player9/280/320",
-      },
-      {
-        id: 10,
-        name: "رمضان الشريف",
-        position: "وسط",
-        number: 6,
-        age: 26,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player10/280/320",
-      },
-      {
-        id: 11,
-        name: "عماد الدين الطرابلسي",
-        position: "وسط",
-        number: 7,
-        age: 28,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player11/280/320",
-      },
-      {
-        id: 12,
-        name: "معتز الهوني",
-        position: "مهاجم",
-        number: 11,
-        age: 23,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player12/280/320",
       },
     ],
     awasit: [
       {
         id: 13,
-        name: "علي المهدي",
-        position: "حارس مرمى",
+        name: isArabic ? "علي المهدي" : "Ali Al-Mahdi",
+        position: isArabic ? "حارس مرمى" : "Goalkeeper",
         number: 22,
         age: 15,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player13/280/320",
       },
       {
         id: 14,
-        name: "حسن الفيتوري",
-        position: "مدافع",
+        name: isArabic ? "حسن الفيتوري" : "Hassan Al-Fayturi",
+        position: isArabic ? "مدافع" : "Defender",
         number: 15,
         age: 14,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player14/280/320",
-      },
-      {
-        id: 15,
-        name: "طارق الشريف",
-        position: "وسط",
-        number: 18,
-        age: 15,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player15/280/320",
-      },
-      {
-        id: 16,
-        name: "بشير الزنتاني",
-        position: "مدافع",
-        number: 13,
-        age: 14,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player16/280/320",
-      },
-      {
-        id: 17,
-        name: "نبيل الورفلي",
-        position: "وسط",
-        number: 16,
-        age: 15,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player17/280/320",
-      },
-      {
-        id: 18,
-        name: "أسامة المصراتي",
-        position: "مهاجم",
-        number: 19,
-        age: 14,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player18/280/320",
-      },
-      {
-        id: 19,
-        name: "وليد البوسيفي",
-        position: "مدافع",
-        number: 14,
-        age: 15,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player19/280/320",
-      },
-      {
-        id: 20,
-        name: "جمال الدين الساحلي",
-        position: "وسط",
-        number: 17,
-        age: 14,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player20/280/320",
       },
     ],
     amal: [
       {
         id: 21,
-        name: "عبدالله الصادق",
-        position: "مهاجم",
+        name: isArabic ? "عبدالله الصادق" : "Abdullah Al-Sadiq",
+        position: isArabic ? "مهاجم" : "Forward",
         number: 11,
         age: 13,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player21/280/320",
       },
       {
         id: 22,
-        name: "إبراهيم الزنتاني",
-        position: "وسط",
+        name: isArabic ? "إبراهيم الزنتاني" : "Ibrahim Al-Zentani",
+        position: isArabic ? "وسط" : "Midfielder",
         number: 14,
         age: 12,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player22/280/320",
-      },
-      {
-        id: 23,
-        name: "محمود الطرابلسي",
-        position: "حارس مرمى",
-        number: 1,
-        age: 13,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player23/280/320",
-      },
-      {
-        id: 24,
-        name: "أمين الفيتوري",
-        position: "مدافع",
-        number: 4,
-        age: 12,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player24/280/320",
-      },
-      {
-        id: 25,
-        name: "سيف الدين المبروك",
-        position: "مدافع",
-        number: 5,
-        age: 13,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player25/280/320",
-      },
-      {
-        id: 26,
-        name: "حمزة الشريف",
-        position: "وسط",
-        number: 8,
-        age: 12,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player26/280/320",
-      },
-      {
-        id: 27,
-        name: "عمر الهوني",
-        position: "وسط",
-        number: 10,
-        age: 13,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player27/280/320",
-      },
-      {
-        id: 28,
-        name: "ياسين القذافي",
-        position: "مهاجم",
-        number: 9,
-        age: 12,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player28/280/320",
       },
     ],
     baraem: [
       {
         id: 29,
-        name: "كريم الزروق",
-        position: "مدافع",
+        name: isArabic ? "كريم الزروق" : "Karim Al-Zarouq",
+        position: isArabic ? "مدافع" : "Defender",
         number: 3,
         age: 11,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player29/280/320",
       },
       {
         id: 30,
-        name: "طه الكيلاني",
-        position: "وسط",
+        name: isArabic ? "طه الكيلاني" : "Taha Al-Kilani",
+        position: isArabic ? "وسط" : "Midfielder",
         number: 6,
         age: 10,
-        nationality: "ليبيا",
+        nationality: isArabic ? "ليبيا" : "Libya",
         image: "https://picsum.photos/seed/player30/280/320",
       },
-      {
-        id: 31,
-        name: "زياد المبروك",
-        position: "حارس مرمى",
-        number: 1,
-        age: 11,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player31/280/320",
-      },
-      {
-        id: 32,
-        name: "فيصل الترهوني",
-        position: "مهاجم",
-        number: 9,
-        age: 10,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player32/280/320",
-      },
-      {
-        id: 33,
-        name: "ماجد الشريف",
-        position: "مدافع",
-        number: 4,
-        age: 11,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player33/280/320",
-      },
-      {
-        id: 34,
-        name: "نادر الهوني",
-        position: "وسط",
-        number: 8,
-        age: 10,
-        nationality: "ليبيا",
-        image: "https://picsum.photos/seed/player34/280/320",
-      },
     ],
-  }
+  })
+
+  const squad = getSquad()
 
   // Mock data for upcoming matches
   const upcomingMatches = [
     {
       id: 1,
-      homeTeam: "السويحلي",
-      awayTeam: "الهلال",
+      homeTeam: isArabic ? "السويحلي" : "Al-Suwaihli",
+      awayTeam: isArabic ? "الهلال" : "Al-Hilal",
       date: "2025-11-05",
       time: "16:00",
-      venue: "ملعب السويحلي",
-      competition: "الدوري الليبي الممتاز",
+      venue: isArabic ? "ملعب السويحلي" : "Al-Suwaihli Stadium",
+      competition: isArabic ? "الدوري الليبي الممتاز" : "Libyan Premier League",
     },
     {
       id: 2,
-      homeTeam: "الأهلي بنغازي",
-      awayTeam: "السويحلي",
+      homeTeam: isArabic ? "الأهلي بنغازي" : "Al-Ahly Benghazi",
+      awayTeam: isArabic ? "السويحلي" : "Al-Suwaihli",
       date: "2025-11-12",
       time: "18:30",
-      venue: "ملعب بنغازي",
-      competition: "الدوري الليبي الممتاز",
+      venue: isArabic ? "ملعب بنغازي" : "Benghazi Stadium",
+      competition: isArabic ? "الدوري الليبي الممتاز" : "Libyan Premier League",
     },
   ]
 
   // Mock data for news
-  const teamNews = {
+  const teamNews: Record<string, Array<{ id: number; title: string; date: string; excerpt: string; image: string; tags: string[] }>> = {
     first: [
       {
         id: 1,
-        title: "الفريق الأول يحقق فوزاً مهماً على الأهلي طرابلس",
+        title: isArabic
+          ? "الفريق الأول يحقق فوزاً مهماً على الأهلي طرابلس"
+          : "First Team Achieves Important Victory Over Al-Ahly Tripoli",
         date: "2025-10-20",
-        excerpt:
-          "حقق الفريق الأول لنادي السويحلي فوزاً مستحقاً على الأهلي طرابلس بنتيجة 2-1 في مباراة مثيرة شهدها ملعب السويحلي.",
+        excerpt: isArabic
+          ? "حقق الفريق الأول لنادي السويحلي فوزاً مستحقاً على الأهلي طرابلس بنتيجة 2-1 في مباراة مثيرة شهدها ملعب السويحلي."
+          : "Al-Suwaihli's first team achieved a deserved victory over Al-Ahly Tripoli 2-1 in an exciting match at Al-Suwaihli Stadium.",
         image: "https://picsum.photos/seed/news1/400/300",
         tags: ["match", "victory"],
       },
       {
         id: 2,
-        title: "المدرب يشيد بأداء اللاعبين في التدريبات",
+        title: isArabic ? "المدرب يشيد بأداء اللاعبين في التدريبات" : "Coach Praises Players' Training Performance",
         date: "2025-10-18",
-        excerpt: "أشاد المدرب الفني للفريق الأول بمستوى اللاعبين خلال التدريبات الأخيرة استعداداً للمباراة القادمة.",
+        excerpt: isArabic
+          ? "أشاد المدرب الفني للفريق الأول بمستوى اللاعبين خلال التدريبات الأخيرة استعداداً للمباراة القادمة."
+          : "The first team's technical coach praised the players' level during recent training sessions in preparation for the upcoming match.",
         image: "https://picsum.photos/seed/news2/400/300",
         tags: ["training"],
-      },
-      {
-        id: 3,
-        title: "يوسف البشير يتصدر قائمة الهدافين",
-        date: "2025-10-15",
-        excerpt: "واصل المهاجم يوسف البشير تألقه ليتصدر قائمة هدافي الدوري الليبي برصيد 12 هدفاً.",
-        image: "https://picsum.photos/seed/news3/400/300",
-        tags: ["achievement"],
-      },
-      {
-        id: 4,
-        title: "تعاقد جديد مع لاعب دولي",
-        date: "2025-10-12",
-        excerpt: "أعلن النادي عن التعاقد مع لاعب دولي جديد لتعزيز صفوف الفريق الأول في الموسم الحالي.",
-        image: "https://picsum.photos/seed/news4/400/300",
-        tags: ["announcement"],
       },
     ],
     awasit: [
       {
         id: 5,
-        title: "فريق الأواسط يتأهل لنهائي البطولة",
+        title: isArabic ? "فريق الأواسط يتأهل لنهائي البطولة" : "Youth Team Qualifies for Championship Final",
         date: "2025-10-19",
-        excerpt: "تأهل فريق الأواسط لنهائي البطولة بعد فوزه على فريق الاتحاد بركلات الترجيح.",
+        excerpt: isArabic
+          ? "تأهل فريق الأواسط لنهائي البطولة بعد فوزه على فريق الاتحاد بركلات الترجيح."
+          : "The youth team qualified for the championship final after defeating Al-Ittihad on penalties.",
         image: "https://picsum.photos/seed/news5/400/300",
         tags: ["match", "victory"],
-      },
-      {
-        id: 6,
-        title: "ترقية لاعبين من فريق الأواسط للفريق الأول",
-        date: "2025-10-16",
-        excerpt: "قرر الجهاز الفني ترقية ثلاثة لاعبين من فريق الأواسط للمشاركة مع الفريق الأول في المباريات القادمة.",
-        image: "https://picsum.photos/seed/news6/400/300",
-        tags: ["announcement"],
-      },
-      {
-        id: 7,
-        title: "معسكر تدريبي مكثف لفريق الأواسط",
-        date: "2025-10-13",
-        excerpt: "يخوض فريق الأواسط معسكر تدريبياً مكثفاً استعداداً للمباريات الحاسمة في البطولة.",
-        image: "https://picsum.photos/seed/news7/400/300",
-        tags: ["training"],
       },
     ],
     amal: [
       {
         id: 8,
-        title: "فريق الآمال يحقق الفوز الخامس على التوالي",
+        title: isArabic ? "فريق الآمال يحقق الفوز الخامس على التوالي" : "Junior Team Achieves Fifth Consecutive Victory",
         date: "2025-10-21",
-        excerpt: "واصل فريق الآمال انتصاراته المتتالية بفوزه على فريق الهلال بثلاثة أهداف نظيفة.",
+        excerpt: isArabic
+          ? "واصل فريق الآمال انتصاراته المتتالية بفوزه على فريق الهلال بثلاثة أهداف نظيفة."
+          : "The junior team continued its winning streak with a 3-0 victory over Al-Hilal.",
         image: "https://picsum.photos/seed/news8/400/300",
         tags: ["match", "victory"],
-      },
-      {
-        id: 9,
-        title: "موهبة شابة تلفت أنظار الأندية الأوروبية",
-        date: "2025-10-17",
-        excerpt: "لفت اللاعب الشاب عبدالله الصادق أنظار عدة أندية أوروبية بعد أدائه المميز في البطولة الإفريقية.",
-        image: "https://picsum.photos/seed/news9/400/300",
-        tags: ["achievement"],
-      },
-      {
-        id: 10,
-        title: "برنامج تطوير خاص للاعبي الآمال",
-        date: "2025-10-14",
-        excerpt: "أطلق النادي برنامجاً تطويرياً خاصاً للاعبي فريق الآمال لصقل مهاراتهم الفنية والبدنية.",
-        image: "https://picsum.photos/seed/news10/400/300",
-        tags: ["training"],
       },
     ],
     baraem: [
       {
         id: 11,
-        title: "فريق البراعم يفوز ببطولة المنطقة",
+        title: isArabic ? "فريق البراعم يفوز ببطولة المنطقة" : "Kids Team Wins Regional Championship",
         date: "2025-10-22",
-        excerpt: "حقق فريق البراعم لقب بطولة المنطقة بعد فوزه في المباراة النهائية بنتيجة 3-1.",
+        excerpt: isArabic
+          ? "حقق فريق البراعم لقب بطولة المنطقة بعد فوزه في المباراة النهائية بنتيجة 3-1."
+          : "The kids team won the regional championship title after winning the final match 3-1.",
         image: "https://picsum.photos/seed/news11/400/300",
         tags: ["match", "victory"],
-      },
-      {
-        id: 12,
-        title: "معسكر تدريبي صيفي لفريق البراعم",
-        date: "2025-10-14",
-        excerpt: "يخوض فريق البراعم معسكر تدريبياً صيفياً استعداداً للبطولة الوطنية المقررة الشهر القادم.",
-        image: "https://picsum.photos/seed/news12/400/300",
-        tags: ["training"],
-      },
-      {
-        id: 13,
-        title: "تكريم لاعبي البراعم المتميزين",
-        date: "2025-10-11",
-        excerpt: "كرم النادي مجموعة من لاعبي فريق البراعم المتميزين تقديراً لجهودهم وإنجازاتهم.",
-        image: "https://picsum.photos/seed/news13/400/300",
-        tags: ["announcement"],
       },
     ],
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5]">
+    <div className="min-h-screen bg-[#F5F5F5]" dir={isArabic ? "rtl" : "ltr"}>
       {/* Hero Section */}
       <section className="relative h-[400px] bg-gradient-to-br from-[#D32F2F] to-[#B71C1C] overflow-hidden">
         <div className="absolute inset-0 bg-[url('/football-stadium-crowd.png')] bg-cover bg-center opacity-20" />
         <div className="container relative mx-auto flex h-full items-center px-4">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: isArabic ? 50 : -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="text-white"
@@ -524,7 +330,7 @@ export default function FootballPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="mb-4 text-5xl font-bold"
             >
-              {t("football")}
+              {isArabic ? "كرة القدم" : "Football"}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -532,7 +338,7 @@ export default function FootballPage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-xl"
             >
-              فريق كرة القدم - نادي السويحلي الرياضي
+              {isArabic ? "فريق كرة القدم - نادي السويحلي الرياضي" : "Football Team - Al-Suwaihli Sports Club"}
             </motion.p>
           </motion.div>
         </div>
@@ -549,7 +355,9 @@ export default function FootballPage() {
             className="mb-6 flex items-center gap-3"
           >
             <Trophy className="h-8 w-8 text-[#D32F2F]" />
-            <h2 className="text-3xl font-bold text-[#333333]">المباريات المباشرة والقادمة</h2>
+            <h2 className="text-3xl font-bold text-[#333333]">
+              {isArabic ? "المباريات المباشرة والقادمة" : "Live & Upcoming Matches"}
+            </h2>
           </motion.div>
           <div className="grid gap-6 md:grid-cols-2">
             {liveMatches.map((match, index) => (
@@ -567,12 +375,12 @@ export default function FootballPage() {
                       <span className="text-sm font-semibold text-[#666666]">{match.competition}</span>
                       {match.status === "live" ? (
                         <Badge className="animate-pulse bg-red-600 text-white">
-                          <Clock className="mr-1 h-3 w-3" />
-                          مباشر - {match.minute}'
+                          <Clock className={`${isArabic ? "ml-1" : "mr-1"} h-3 w-3`} />
+                          {isArabic ? `مباشر - ${match.minute}'` : `Live - ${match.minute}'`}
                         </Badge>
                       ) : (
                         <Badge variant="outline" className="border-[#D32F2F] text-[#D32F2F]">
-                          <Calendar className="mr-1 h-3 w-3" />
+                          <Calendar className={`${isArabic ? "ml-1" : "mr-1"} h-3 w-3`} />
                           {match.date} - {match.time}
                         </Badge>
                       )}
@@ -593,9 +401,7 @@ export default function FootballPage() {
                           </motion.p>
                         )}
                       </div>
-                      <div className="px-4 text-2xl font-bold text-[#666666]">
-                        {match.status === "live" ? ":" : "VS"}
-                      </div>
+                      <div className="px-4 text-2xl font-bold text-[#666666]">{match.status === "live" ? ":" : "VS"}</div>
                       <div className="flex-1 text-center">
                         <p className="mb-2 text-xl font-bold text-[#333333]">{match.awayTeam}</p>
                         {match.status === "live" && (
@@ -627,30 +433,24 @@ export default function FootballPage() {
             className="mb-6 flex items-center gap-3"
           >
             <TrendingUp className="h-8 w-8 text-[#D32F2F]" />
-            <h2 className="text-3xl font-bold text-[#333333]">{t("leagueTable")}</h2>
+            <h2 className="text-3xl font-bold text-[#333333]">{isArabic ? "جدول الترتيب" : "League Table"}</h2>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <Card>
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead className="bg-[#D32F2F] text-white">
                       <tr>
-                        <th className="p-3 text-right font-semibold">المركز</th>
-                        <th className="p-3 text-right font-semibold">الفريق</th>
-                        <th className="p-3 text-center font-semibold">لعب</th>
-                        <th className="p-3 text-center font-semibold">فاز</th>
-                        <th className="p-3 text-center font-semibold">تعادل</th>
-                        <th className="p-3 text-center font-semibold">خسر</th>
-                        <th className="p-3 text-center font-semibold">له</th>
-                        <th className="p-3 text-center font-semibold">عليه</th>
-                        <th className="p-3 text-center font-semibold">الفارق</th>
-                        <th className="p-3 text-center font-semibold">النقاط</th>
+                        <th className={`p-3 ${isArabic ? "text-right" : "text-left"} font-semibold`}>
+                          {isArabic ? "المركز" : "Pos"}
+                        </th>
+                        <th className={`p-3 ${isArabic ? "text-right" : "text-left"} font-semibold`}>{isArabic ? "الفريق" : "Team"}</th>
+                        <th className="p-3 text-center font-semibold">{isArabic ? "لعب" : "P"}</th>
+                        <th className="p-3 text-center font-semibold">{isArabic ? "فاز" : "W"}</th>
+                        <th className="p-3 text-center font-semibold">{isArabic ? "تعادل" : "D"}</th>
+                        <th className="p-3 text-center font-semibold">{isArabic ? "خسر" : "L"}</th>
+                        <th className="p-3 text-center font-semibold">{isArabic ? "النقاط" : "Pts"}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -658,7 +458,7 @@ export default function FootballPage() {
                         <tr
                           key={team.position}
                           className={`border-b ${
-                            team.team === "السويحلي"
+                            team.team.includes("السويحلي") || team.team.includes("Suwaihli")
                               ? "bg-[#FFD700]/20 font-bold"
                               : index % 2 === 0
                                 ? "bg-white"
@@ -674,14 +474,11 @@ export default function FootballPage() {
                               {team.position}
                             </span>
                           </td>
-                          <td className="p-3 text-right">{team.team}</td>
+                          <td className={`p-3 ${isArabic ? "text-right" : "text-left"}`}>{team.team}</td>
                           <td className="p-3 text-center">{team.played}</td>
                           <td className="p-3 text-center">{team.won}</td>
                           <td className="p-3 text-center">{team.drawn}</td>
                           <td className="p-3 text-center">{team.lost}</td>
-                          <td className="p-3 text-center">{team.gf}</td>
-                          <td className="p-3 text-center">{team.ga}</td>
-                          <td className="p-3 text-center font-semibold">{team.gd > 0 ? `+${team.gd}` : team.gd}</td>
                           <td className="p-3 text-center font-bold text-[#D32F2F]">{team.points}</td>
                         </tr>
                       ))}
@@ -703,22 +500,22 @@ export default function FootballPage() {
             className="mb-6 flex items-center gap-3"
           >
             <Users className="h-8 w-8 text-[#D32F2F]" />
-            <h2 className="text-3xl font-bold text-[#333333]">{t("players")}</h2>
+            <h2 className="text-3xl font-bold text-[#333333]">{isArabic ? "اللاعبون" : "Players"}</h2>
           </motion.div>
 
           <Tabs defaultValue="first" className="w-full" onValueChange={(value) => setSelectedTeam(value as any)}>
-            <TabsList className="mb-6 grid w-full grid-cols-4 bg-white" dir="rtl">
+            <TabsList className="mb-6 grid w-full grid-cols-4 bg-white" dir={isArabic ? "rtl" : "ltr"}>
               <TabsTrigger value="baraem" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
-                براعم
+                {isArabic ? "براعم" : "Kids"}
               </TabsTrigger>
               <TabsTrigger value="amal" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
-                آمال
+                {isArabic ? "آمال" : "Juniors"}
               </TabsTrigger>
               <TabsTrigger value="awasit" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
-                أواسط
+                {isArabic ? "أواسط" : "Youth"}
               </TabsTrigger>
               <TabsTrigger value="first" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
-                الفريق الأول
+                {isArabic ? "الفريق الأول" : "First Team"}
               </TabsTrigger>
             </TabsList>
 
@@ -740,26 +537,22 @@ export default function FootballPage() {
             className="mb-6 flex items-center gap-3"
           >
             <Newspaper className="h-8 w-8 text-[#D32F2F]" />
-            <h2 className="text-3xl font-bold text-[#333333]">أخبار الفريق</h2>
+            <h2 className="text-3xl font-bold text-[#333333]">{isArabic ? "أخبار الفريق" : "Team News"}</h2>
           </motion.div>
 
-          <Tabs
-            defaultValue="first"
-            className="w-full"
-            onValueChange={(value) => setSelectedNewsCategory(value as any)}
-          >
-            <TabsList className="mb-6 grid w-full grid-cols-4 bg-white" dir="rtl">
+          <Tabs defaultValue="first" className="w-full" onValueChange={(value) => setSelectedNewsCategory(value as any)}>
+            <TabsList className="mb-6 grid w-full grid-cols-4 bg-white" dir={isArabic ? "rtl" : "ltr"}>
               <TabsTrigger value="baraem" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
-                براعم
+                {isArabic ? "براعم" : "Kids"}
               </TabsTrigger>
               <TabsTrigger value="amal" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
-                آمال
+                {isArabic ? "آمال" : "Juniors"}
               </TabsTrigger>
               <TabsTrigger value="awasit" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
-                أواسط
+                {isArabic ? "أواسط" : "Youth"}
               </TabsTrigger>
               <TabsTrigger value="first" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
-                الفريق الأول
+                {isArabic ? "الفريق الأول" : "First Team"}
               </TabsTrigger>
             </TabsList>
 
@@ -781,12 +574,7 @@ export default function FootballPage() {
                           transition={{ duration: 0.3 }}
                           className="relative h-48 w-full overflow-hidden"
                         >
-                          <Image
-                            src={news.image || "/placeholder.svg"}
-                            alt={news.title}
-                            fill
-                            className="object-cover"
-                          />
+                          <Image src={news.image || "/placeholder.svg"} alt={news.title} fill className="object-cover" />
                         </motion.div>
                         <CardContent className="p-4">
                           <div className="mb-2 flex items-center gap-2 text-sm text-[#666666]">
@@ -815,7 +603,7 @@ export default function FootballPage() {
             className="mb-6 flex items-center gap-3"
           >
             <Calendar className="h-8 w-8 text-[#D32F2F]" />
-            <h2 className="text-3xl font-bold text-[#333333]">المباريات القادمة</h2>
+            <h2 className="text-3xl font-bold text-[#333333]">{isArabic ? "المباريات القادمة" : "Upcoming Matches"}</h2>
           </motion.div>
           <div className="grid gap-6 md:grid-cols-2">
             {upcomingMatches.map((match, index) => (
@@ -845,7 +633,7 @@ export default function FootballPage() {
                       <div className="flex items-center gap-2 text-sm text-[#666666]">
                         <Calendar className="h-4 w-4" />
                         <span>{match.date}</span>
-                        <Clock className="mr-2 h-4 w-4" />
+                        <Clock className={`${isArabic ? "ml-2" : "mr-2"} h-4 w-4`} />
                         <span>{match.time}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-[#666666]">
