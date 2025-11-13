@@ -12,8 +12,8 @@ import { PlayerCarousel } from "@/components/player-carousel"
 
 export default function FootballPage() {
   const { isArabic } = useLanguage()
-  const [selectedTeam, setSelectedTeam] = useState<"first" | "awasit" | "amal" | "baraem">("first")
-  const [selectedNewsCategory, setSelectedNewsCategory] = useState<"first" | "awasit" | "amal" | "baraem">("first")
+  const [, setSelectedTeam] = useState<"first" | "awasit" | "amal" | "baraem">("first")
+  const [, setSelectedNewsCategory] = useState<"first" | "awasit" | "amal" | "baraem">("first")
 
   // Mock data for live scores
   const liveMatches = [
@@ -503,7 +503,7 @@ export default function FootballPage() {
             <h2 className="text-3xl font-bold text-[#333333]">{isArabic ? "اللاعبون" : "Players"}</h2>
           </motion.div>
 
-          <Tabs defaultValue="first" className="w-full" onValueChange={(value) => setSelectedTeam(value as any)}>
+          <Tabs defaultValue="first" className="w-full" onValueChange={(value) => setSelectedTeam(value as "first" | "awasit" | "amal" | "baraem")}>
             <TabsList className="mb-6 grid w-full grid-cols-4 bg-white" dir={isArabic ? "rtl" : "ltr"}>
               <TabsTrigger value="baraem" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
                 {isArabic ? "براعم" : "Kids"}
@@ -540,7 +540,7 @@ export default function FootballPage() {
             <h2 className="text-3xl font-bold text-[#333333]">{isArabic ? "أخبار الفريق" : "Team News"}</h2>
           </motion.div>
 
-          <Tabs defaultValue="first" className="w-full" onValueChange={(value) => setSelectedNewsCategory(value as any)}>
+          <Tabs defaultValue="first" className="w-full" onValueChange={(value) => setSelectedNewsCategory(value as "first" | "awasit" | "amal" | "baraem")}>
             <TabsList className="mb-6 grid w-full grid-cols-4 bg-white" dir={isArabic ? "rtl" : "ltr"}>
               <TabsTrigger value="baraem" className="data-[state=active]:bg-[#D32F2F] data-[state=active]:text-white">
                 {isArabic ? "براعم" : "Kids"}
