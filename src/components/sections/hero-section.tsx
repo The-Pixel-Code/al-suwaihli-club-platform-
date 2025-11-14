@@ -189,38 +189,6 @@ export const HeroSection = () => {
                   environmentPreset="studio"
                 />
               </motion.div>
-
-              {/* <motion.div
-                animate={{
-                  y: [0, -15, 0],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                  delay: 2,
-                }}
-                className="absolute top-20 -left-20 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg"
-                aria-hidden="true"
-              >
-                <span className="text-2xl">🏆</span>
-              </motion.div>
-
-              <motion.div
-                animate={{
-                  y: [0, 8, 0],
-                }}
-                transition={{
-                  duration: 3.5,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                  delay: 0.5,
-                }}
-                className="absolute top-20 -right-20 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg"
-                aria-hidden="true"
-              >
-                <span className="text-2xl">🏀</span>
-              </motion.div> */}
             </div>
           </motion.div>
         </div>
