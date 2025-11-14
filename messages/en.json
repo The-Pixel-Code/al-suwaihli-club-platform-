@@ -50,6 +50,9 @@
             "learn": "Learn More"
         }
     },
+    "NewAds" : {
+        "readMore" : "Read More"
+    },
     "welcome": "Welcome to our application!",
     "login": "Please log in to continue.",
     "logout": "You have successfully logged out.",
