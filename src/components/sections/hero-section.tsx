@@ -8,7 +8,6 @@ import useLanguage from "@/hooks/use-language";
 import { cn } from "@/lib/utils";
 import { ClubLogo } from "@/components/ui/club-logo";
 import { SportBall } from "@/components/3d/sport-ball";
-import { AnimatedSportsBackground } from "@/components/ui/animated-sports-background";
 
 export const HeroSection = () => {
   const t = useTranslations("Hero");
@@ -16,8 +15,20 @@ export const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-[#F5F5FA] via-[#F5F5FA] to-[#FFE5E5]">
-      <AnimatedSportsBackground />
-
+      {/* Grid Background */}
+      {/* <div
+        className={cn(
+          "absolute inset-0 z-0",
+          "[background-size:20px_20px]",
+          "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
+          "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]",
+          "opacity-30"
+        )}
+        aria-hidden="true"
+      /> */}
+      {/* Radial gradient mask to fade grid in center */}
+      <div className="pointer-events-none absolute inset-0 z-0 [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)]" />
+      
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 py-20">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
@@ -78,6 +89,8 @@ export const HeroSection = () => {
           </motion.div>
 
           {/* Logo and Visual Elements */}
+          {/* Glow Effect */}
+          <div className="absolute inset-0 bg-linear-to-t from-red-600/20 to-transparent rounded-full blur-3xl -z-10" />
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -130,6 +143,8 @@ export const HeroSection = () => {
                     </svg>
                   </motion.div>
                   {/* Main Logo*/}
+                  {/* Glow Effect */}
+                  {/* <div className="absolute inset-0 bg-linear-to-t from-red-600/20 to-transparent rounded-full blur-3xl -z-10" /> */}
                   <div className="relative flex items-center justify-center">
                     <ClubLogo
                       className={cn(

@@ -14,29 +14,14 @@ export const getNavItems = (
     label: t("club"),
     children: [
       {
-        label: t("clubHistory"),
-        href: `/${locale}/club/history`,
-        description: t("clubHistoryDesc"),
-      },
-      {
-        label: t("championships"),
-        href: `/${locale}/club/championships`,
-        description: t("championshipsDesc"),
-      },
-      {
-        label: t("clubMagazine"),
-        href: `/${locale}/club/magazine`,
-        description: t("clubMagazineDesc"),
-      },
-      {
         label: t("cityOfMisrata"),
-        href: `/${locale}/club/city-of-misrata`,
+        href: `/${locale}/city-of-misrata`,
         description: t("cityOfMisrataDesc"),
       },
       {
-        label: t("clubLegends"),
-        href: `/${locale}/club/legends`,
-        description: t("clubLegendsDesc"),
+        label: t("aboutTheClub"),
+        href: `/${locale}/about-the-club`,
+        description: t("aboutTheClubDesc"),
       },
     ],
   },
