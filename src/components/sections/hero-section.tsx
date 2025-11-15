@@ -8,26 +8,20 @@ import useLanguage from "@/hooks/use-language";
 import { cn } from "@/lib/utils";
 import { ClubLogo } from "@/components/ui/club-logo";
 import { SportBall } from "@/components/3d/sport-ball";
+import { GridSmallBackground } from "@/components/ui/grid-background";
 
 export const HeroSection = () => {
   const t = useTranslations("Hero");
   const { isArabic: isRtl } = useLanguage();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-[#F5F5FA] via-[#F5F5FA] to-[#FFE5E5]">
-      {/* Grid Background */}
-      {/* <div
-        className={cn(
-          "absolute inset-0 z-0",
-          "[background-size:20px_20px]",
-          "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
-          "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]",
-          "opacity-30"
-        )}
-        aria-hidden="true"
-      /> */}
-      {/* Radial gradient mask to fade grid in center */}
-      <div className="pointer-events-none absolute inset-0 z-0 [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)]" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Grid Background with custom styling */}
+      <div className="absolute inset-0 bg-linear-to-br from-[#F5F5FA] via-[#F5F5FA] to-[#FFE5E5]">
+        <GridSmallBackground>
+          <div />
+        </GridSmallBackground>
+      </div>
       
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 py-20">
@@ -143,8 +137,6 @@ export const HeroSection = () => {
                     </svg>
                   </motion.div>
                   {/* Main Logo*/}
-                  {/* Glow Effect */}
-                  {/* <div className="absolute inset-0 bg-linear-to-t from-red-600/20 to-transparent rounded-full blur-3xl -z-10" /> */}
                   <div className="relative flex items-center justify-center">
                     <ClubLogo
                       className={cn(

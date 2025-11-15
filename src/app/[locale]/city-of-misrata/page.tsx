@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { MapPin, Heart, Landmark, Users } from "lucide-react";
 import useLanguage from "@/hooks/use-language";
-import { AnimatedSportsBackground } from "@/components/ui/animated-sports-background";
+import { GridSmallBackground } from "@/components/ui/grid-background";
 import Image from "next/image";
 
 export default function CityOfMisrataPage() {
@@ -13,7 +13,9 @@ export default function CityOfMisrataPage() {
     <div className="min-h-screen relative" dir={isRtl ? "rtl" : "ltr"}>
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-        <AnimatedSportsBackground localeDir={isRtl ? "rtl" : "ltr"} />
+        <GridSmallBackground>
+          <div />
+        </GridSmallBackground>
         
         <div className="container mx-auto px-4 relative z-10">
           <motion.div

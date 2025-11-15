@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, MapPin, Trophy, Users, Clock, TrendingUp, Newspaper } from "lucide-react"
 import Image from "next/image"
+import { SportBall } from "@/components/3d/sport-ball";
 import { motion } from "framer-motion"
 import { PlayerCarousel } from "@/components/player-carousel"
 
@@ -114,7 +115,7 @@ export default function FootballPage() {
         number: 1,
         age: 28,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player1/280/320",
+        image: "/assets/images/play 1.jpg",
       },
       {
         id: 2,
@@ -123,7 +124,7 @@ export default function FootballPage() {
         number: 4,
         age: 26,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player2/280/320",
+        image: "/assets/images/play 2.jpg",
       },
       {
         id: 3,
@@ -132,7 +133,7 @@ export default function FootballPage() {
         number: 5,
         age: 29,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player3/280/320",
+        image: "/assets/images/play 3.jpg",
       },
       {
         id: 4,
@@ -141,7 +142,7 @@ export default function FootballPage() {
         number: 8,
         age: 25,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player4/280/320",
+        image: "/assets/images/play 4.jpg",
       },
       {
         id: 5,
@@ -150,7 +151,7 @@ export default function FootballPage() {
         number: 10,
         age: 27,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player5/280/320",
+        image: "/assets/images/play 2.jpg",
       },
       {
         id: 6,
@@ -159,7 +160,7 @@ export default function FootballPage() {
         number: 9,
         age: 24,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player6/280/320",
+        image: "/assets/images/play 3.jpg",
       },
     ],
     awasit: [
@@ -170,7 +171,7 @@ export default function FootballPage() {
         number: 22,
         age: 15,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player13/280/320",
+        image: "/assets/images/play 2.jpg",
       },
       {
         id: 14,
@@ -179,7 +180,7 @@ export default function FootballPage() {
         number: 15,
         age: 14,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player14/280/320",
+        image: "/assets/images/play 1.jpg",
       },
     ],
     amal: [
@@ -190,7 +191,7 @@ export default function FootballPage() {
         number: 11,
         age: 13,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player21/280/320",
+        image: "/assets/images/Play 1.jpg",
       },
       {
         id: 22,
@@ -199,7 +200,7 @@ export default function FootballPage() {
         number: 14,
         age: 12,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player22/280/320",
+        image: "/assets/images/Play 2.jpg",
       },
     ],
     baraem: [
@@ -210,7 +211,7 @@ export default function FootballPage() {
         number: 3,
         age: 11,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player29/280/320",
+        image: "/assets/images/Play 4.jpg",
       },
       {
         id: 30,
@@ -219,7 +220,7 @@ export default function FootballPage() {
         number: 6,
         age: 10,
         nationality: isArabic ? "ليبيا" : "Libya",
-        image: "https://picsum.photos/seed/player30/280/320",
+        image: "/assets/images/Play 1.jpg",
       },
     ],
   })
@@ -260,7 +261,7 @@ export default function FootballPage() {
         excerpt: isArabic
           ? "حقق الفريق الأول لنادي السويحلي فوزاً مستحقاً على الأهلي طرابلس بنتيجة 2-1 في مباراة مثيرة شهدها ملعب السويحلي."
           : "Al-Suwaihli's first team achieved a deserved victory over Al-Ahly Tripoli 2-1 in an exciting match at Al-Suwaihli Stadium.",
-        image: "https://picsum.photos/seed/news1/400/300",
+        image: "/assets/images/news 1.jpg",
         tags: ["match", "victory"],
       },
       {
@@ -270,7 +271,7 @@ export default function FootballPage() {
         excerpt: isArabic
           ? "أشاد المدرب الفني للفريق الأول بمستوى اللاعبين خلال التدريبات الأخيرة استعداداً للمباراة القادمة."
           : "The first team's technical coach praised the players' level during recent training sessions in preparation for the upcoming match.",
-        image: "https://picsum.photos/seed/news2/400/300",
+        image: "/assets/images/news 2.jpg",
         tags: ["training"],
       },
     ],
@@ -282,7 +283,7 @@ export default function FootballPage() {
         excerpt: isArabic
           ? "تأهل فريق الأواسط لنهائي البطولة بعد فوزه على فريق الاتحاد بركلات الترجيح."
           : "The youth team qualified for the championship final after defeating Al-Ittihad on penalties.",
-        image: "https://picsum.photos/seed/news5/400/300",
+        image: "/assets/images/news 3.jpg",
         tags: ["match", "victory"],
       },
     ],
@@ -294,7 +295,7 @@ export default function FootballPage() {
         excerpt: isArabic
           ? "واصل فريق الآمال انتصاراته المتتالية بفوزه على فريق الهلال بثلاثة أهداف نظيفة."
           : "The junior team continued its winning streak with a 3-0 victory over Al-Hilal.",
-        image: "https://picsum.photos/seed/news8/400/300",
+        image: "/assets/images/news 4.jpg",
         tags: ["match", "victory"],
       },
     ],
@@ -306,7 +307,7 @@ export default function FootballPage() {
         excerpt: isArabic
           ? "حقق فريق البراعم لقب بطولة المنطقة بعد فوزه في المباراة النهائية بنتيجة 3-1."
           : "The kids team won the regional championship title after winning the final match 3-1.",
-        image: "https://picsum.photos/seed/news11/400/300",
+        image: "/assets/images/news 5.jpg",
         tags: ["match", "victory"],
       },
     ],
@@ -340,6 +341,27 @@ export default function FootballPage() {
             >
               {isArabic ? "فريق كرة القدم - نادي السويحلي الرياضي" : "Football Team - Al-Suwaihli Sports Club"}
             </motion.p>
+            <motion.div
+                animate={{
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+                className="absolute -top-10 -right-10 rounded-2xl"
+                aria-hidden="true"
+              >
+                <SportBall
+                  sport="soccer"
+                  scale={5}
+                  autoRotate={true}
+                  autoRotateSpeed={1.5}
+                  enableShadows={false}
+                  environmentPreset="studio"
+                />
+              </motion.div>
           </motion.div>
         </div>
       </section>
@@ -457,19 +479,17 @@ export default function FootballPage() {
                       {standings.map((team, index) => (
                         <tr
                           key={team.position}
-                          className={`border-b ${
-                            team.team.includes("السويحلي") || team.team.includes("Suwaihli")
-                              ? "bg-[#FFD700]/20 font-bold"
-                              : index % 2 === 0
-                                ? "bg-white"
-                                : "bg-[#F5F5F5]"
-                          }`}
+                          className={`border-b ${team.team.includes("السويحلي") || team.team.includes("Suwaihli")
+                            ? "bg-[#FFD700]/20 font-bold"
+                            : index % 2 === 0
+                              ? "bg-white"
+                              : "bg-[#F5F5F5]"
+                            }`}
                         >
                           <td className="p-3 text-center">
                             <span
-                              className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${
-                                team.position <= 3 ? "bg-[#D32F2F] text-white" : "bg-[#E0E0E0] text-[#666666]"
-                              }`}
+                              className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${team.position <= 3 ? "bg-[#D32F2F] text-white" : "bg-[#E0E0E0] text-[#666666]"
+                                }`}
                             >
                               {team.position}
                             </span>
