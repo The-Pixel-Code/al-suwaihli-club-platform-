@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
+import type { TooltipProps } from "recharts"
 
 import { cn } from "@/lib/utils"
 
@@ -118,19 +119,8 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<"div"> & {
-    active?: boolean
-    payload?: Array<{
-      dataKey?: string
-      name?: string
-      value?: number | string
-      payload?: Record<string, unknown>
-      color?: string
-      fill?: string
-    }>
-    label?: string
-    labelFormatter?: (value: unknown, payload: unknown[]) => React.ReactNode
-    formatter?: (value: unknown, name: unknown, item: unknown, index: number, payload: unknown) => React.ReactNode
+}: React.ComponentProps<"div"> &
+  Partial<TooltipProps<number, string>> & {
     color?: string
     hideLabel?: boolean
     hideIndicator?: boolean
@@ -195,7 +185,11 @@ function ChartTooltipContent({
         {payload.map((item, index) => {
           const key = `${nameKey || item.name || item.dataKey || "value"}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
-          const indicatorColor = color || item.payload?.fill || item.color
+          const indicatorColor =
+            color ??
+            (item as any)?.payload?.fill ??
+            (item as any)?.fill ??
+            item.color
 
           return (
             <div
